@@ -131,29 +131,48 @@
         </div>
         <!-- chart-content -->
         <div class="chart_container">
-            <h3 class="main_title">Number fo Sales by Store</h3>
             <div class="chart_content">
-                <canvas class="pieChart"></canvas>
+                <h3 class="main_title">Number fo Sales by Store</h3>
+                <canvas class="pieChart" id="doughnut"></canvas>
+            </div>
+            <div class="chart_content">
+                <h3 class="main_title">Number fo Sales by Store</h3>
+                <canvas class="barRevenue" id="barRevenue"></canvas>
+            </div>
+            <div class="chart_content">
+                <h3 class="main_title">Number fo Sales by Store</h3>
+                <canvas class="barRevenue" id="barRevenue"></canvas>
             </div>
         </div>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
-        <script>
+<!-- containerbawah -->
+        <div class="chart_container">
+            <div class="chart_content">
+                <h3 class="main_title">Number fo Sales by Store</h3>
+                <canvas class="pieChart" id="doughnut"></canvas>
+            </div>
+            <div class="chart_content">
+                <h3 class="main_title">Number fo Sales by Store</h3>
+                <canvas class="barRevenue" id="barRevenue"></canvas>
+            </div>
+        </div>
+        <!-- <script>
             // setup data
             const data = [{
-              labels: ['Astoria', 'Hells kitchen', 'Lower Manhattan'],
-              datasets: [{
+            labels: ['Astoria', 'Hells kitchen', 'Lower Manhattan'],
+            datasets: [{
                 label: 'dataset.json',
                 data: [],
                 backgroundColor: [],
                 borderColor: [],
                 borderWidth: 1,
               }]
-            },
+            },]
 
             // config 
                 const config = {
-                    type: 'bar', 'data'
-                      options: {
+                    type: 'bar',
+                    data: data,
+                    options: {
                         scales: {
                             y: {beginAtZero: truetrue}
                         }
@@ -169,129 +188,10 @@
                 // Instantly assign Chart.js version
                 const chartVersion = document.getElementById('chartVersion');
                 chartVersion.innerText = Chart.version;
-        </script>
-        <div class="chart_container">
-            <h3 class="main_title">Revenue of Contribution%</h3>
-            <br>
-            <h3 class="main_title">by Product categories</h3>
-            <div class="chart_content">
-                <canvas class="barChart1"></canvas>
-            </div>
+        </script> -->
         </div>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
-        <script>
-            // setup 
-            const data = [{
-              labels: ['Astoria', 'Hells kitchen', 'Lower Manhattan'],
-              datasets: [{
-                label: 'dataset.json',
-                data: [],
-                backgroundColor: [],
-                borderColor: [],
-                borderWidth: 1,
-              }]
-            },
-
-            // config 
-                const config = {
-                    type: 'bar', 'data'
-                      options: {
-                        scales: {
-                            y: {beginAtZero: truetrue}
-                        }
-                    }
-                }
-            
-                // render init block
-                const pieChart = new Chart(
-                document.getElementById('dataChart1'),
-                config
-                );
-
-                // Instantly assign Chart.js version
-                const chartVersion = document.getElementById('chartVersion');
-                chartVersion.innerText = Chart.version;
-        </script>
-        <div class="chart_container">
-            <h3 class="main_title">Revenue Contribution by Product Types</h3>
-            <div class="chart_content">
-                <canvas class="barChart2"></canvas>
-            </div>
-        </div>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
-        <script>
-            // setup 
-            const data = [{
-              labels: ['Astoria', 'Hells kitchen', 'Lower Manhattan'],
-              datasets: [{
-                label: 'dataset.json',
-                data: [],
-                backgroundColor: [],
-                borderColor: [],
-                borderWidth: 1,
-              }]
-            },
-
-            // config 
-                const config = {
-                    type: 'bar', 'data'
-                      options: {
-                        scales: {
-                            y: {beginAtZero: truetrue}
-                        }
-                    }
-                }
-            
-                // render init block
-                const pieChart = new Chart(
-                document.getElementById('barChart2'),
-                config
-                );
-
-                // Instantly assign Chart.js version
-                const chartVersion = document.getElementById('chartVersion');
-                chartVersion.innerText = Chart.version;
-        </script>
-        <div class="chart_container">
-            <h3 class="main_title">3 Product Types with Lowest Revenue</h3>
-            <div class="chart_content">
-                <canvas class="barChart3"></canvas>
-            </div>
-        </div>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
-        <script>
-            // setup 
-            const data = [{
-              labels: ['Astoria', 'Hells kitchen', 'Lower Manhattan'],
-              datasets: [{
-                label: 'dataset.json',
-                data: [],
-                backgroundColor: [],
-                borderColor: [],
-                borderWidth: 1,
-            }]
-            },
-
-            // config 
-                const config = {
-                    type: 'bar', 'data'
-                      options: {
-                        scales: {
-                            y: {beginAtZero: truetrue}
-                        }
-                    }
-                }
-            
-                // render init block
-                const pieChart = new Chart(
-                document.getElementById('barChart3'),
-                config
-                );
-
-                // Instantly assign Chart.js version
-                const chartVersion = document.getElementById('chartVersion');
-                chartVersion.innerText = Chart.version;
-        </script>
-    </div>
+        <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+        <script src="assets/js/index.js"></script>
 </body>
 </html>

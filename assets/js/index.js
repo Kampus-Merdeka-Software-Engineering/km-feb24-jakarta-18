@@ -1,51 +1,65 @@
-// Bar chart
-const labels = ["Aria", "Hell's Kitchen", "Lower Manhattan"];
-const data = {
-  labels: labels,
-  datasets: [
+// Pie chart
+function createChart(labels, datasets, type, options, element){
+  // const labels = ["Aria", "Hell's Kitchen", "Lower Manhattan"];
+  const data = {
+    labels: labels,
+    // datasets: [
+    //   {
+    //     label: "My First Dataset",
+    //     data: [65, 59, 80],
+    //     backgroundColor: ["red", "blue", "green"],
+    //   },
+    // ],
+    datasets: datasets,
+  };
+
+  const config = {
+    // type: "doughnut",
+    type: type,
+    data: data,
+    options: options,
+    // options: {
+    //   scales: {
+    //     y: {
+    //       beginAtZero: true,
+    //     },
+    //   },
+    // },
+  };
+  // const ctx = document.getElementById("doughnut");
+  const ctx = document.getElementById(element);
+  // console.log(window);
+
+  // const pieChart = new Chart(ctx, config);
+  // const myChart = new Chart(ctx, config);
+  return new Chart(ctx, config);
+}
+
+const pieChart = createChart(
+  ["Aria", "Hell's Kitchen", "Lower Manhattan"],
+  [
     {
       label: "My First Dataset",
       data: [65, 59, 80],
-      backgroundColor: [
-        // "rgba(255, 99, 132, 0.2)",
-        "red",
-        "rgba(255, 159, 64, 0.2)",
-        "rgba(255, 205, 86, 0.2)",
-        // "rgba(75, 192, 192, 0.2)",
-        // "rgba(54, 162, 235, 0.2)",
-        // "rgba(153, 102, 255, 0.2)",
-        // "rgba(201, 203, 207, 0.2)",
-      ],
-      borderColor: [
-        "rgb(255, 99, 132)",
-        "rgb(255, 159, 64)",
-        "rgb(255, 205, 86)",
-        // "rgb(75, 192, 192)",
-        // "rgb(54, 162, 235)",
-        // "rgb(153, 102, 255)",
-        // "rgb(201, 203, 207)",
-      ],
-      borderWidth: 1,
+      backgroundColor: ["red", "blue", "green"],
     },
   ],
-};
+  "doughnut",
+  {},
+  "doughnut"
+);
 
-const config = {
-  type: "bar",
-  data: data,
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
+//barchart
+const barRevenue = createChart(
+  ["Coffee", "Tea", "Bakery"],
+  [
+    {
+      label: "My First Dataset",
+      data: [65, 59, 80],
+      backgroundColor: ["red", "blue", "green"],
     },
-  },
-};
-const ctx = document.getElementById("bar");
-console.log(window);
-
-new Chart("bar", {
-  type: "bar",
-  data: data,
-});
-// const myChart = new Chart(ctx, config);
+  ],
+  "bar",
+  { indexAxis: "y" },
+  "barRevenue"
+);
