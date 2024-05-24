@@ -1,16 +1,11 @@
-total sales
+total Transaction
 [{
-    "Total Sales": "241470"
+    "Total transaction": "214,470"
 }]
 
 //total revenue
 [{
-    "Total Revenue": "$698668"
-}]
-
-//average revenue
-[{
-    "Average Revenue": "$5"
+    "Total Revenue": "$698,668"
 }]
 
 //average sales/item
@@ -18,97 +13,100 @@ total sales
     "Average Sales/Item": "1.44"
 }]
 
-average revenue/item
+//average revenue/item
 [{
     "Average Revenue/Item": "$5"
 }]
 
-revenue contribution
+//number of sales by store
+[{
+  "Store Location": "Astoria",
+  "Sales": "33.2"
+}, {
+  "Store Location": "Hell's Kitchen",
+  "Sales": "33.8"
+}, {
+  "Store Location": "Lower Manhattan",
+  "Sales": "32.9"
+}]
+
+//revenue COntribution by product categories
+[{
+  "Product categories": "Coffe",
+  "Revenue": "39%"
+}, {
+    "Product categories": "Tea",
+      "Revenue": "28%"
+}, {
+    "Product categories": "Bakery",
+      "Revenue": "12%"
+}, {
+    "Product categories": "Drinking Chocolate",
+      "Revenue": "10%"
+},{
+    "Product categories": "Coffe Beans",
+      "Revenue": "6%"
+}, {
+    "Product categories": "Branded",
+      "Revenue": "2%"
+}, {
+    "Product categories": "Loose Tea",
+      "Revenue": "2%"
+}, {
+    "Product categories": "Flavours",
+      "Revenue": "1%"
+}, {
+    "Product categories": "Packed Chocolate",
+      "Revenue": "1%"
+}]
+
+//revenue contribution by product type
 [{
     "product_type": "Barista Espresso",
-    "revenue": "91311.399999993824"
+    "Revenue": "13%"
   }, {
     "product_type": "Brewed Chai tea",
-    "revenue": "77081.95000000298"
+    "revenue": "11%"
   }, {
     "product_type": "Hot chocolate",
-    "revenue": "72416.0"
+    "revenue": "10%"
   }, {
     "product_type": "Gourmet brewed coffee",
-    "revenue": "70034.599999999016"
+    "revenue": "10%"
   }, {
     "product_type": "Brewed Black tea",
-    "revenue": "47932.0"
+    "revenue": "7%"
   }, {
     "product_type": "Brewed herbal tea",
-    "revenue": "47539.5"
+    "revenue": "7%"
   }, {
     "product_type": "Premium brewed coffee",
-    "revenue": "38781.150000000351"
+    "revenue": "6%"
   }, {
     "product_type": "Organic brewed coffee",
-    "revenue": "37746.500000001324"
+    "revenue": "5%"
   }, {
     "product_type": "Scone",
-    "revenue": "37051.5"
+    "revenue": "5%"
   }, {
     "product_type": "Drip coffee",
-    "revenue": "31984.0"
-  }, {
-    "product_type": "Pastry",
-    "revenue": "25615.25"
-  }, {
-    "product_type": "Brewed Green tea",
-    "revenue": "23852.5"
-  }, {
-    "product_type": "Biscotti",
-    "revenue": "19751.0"
-  }, {
-    "product_type": "Premium Beans",
-    "revenue": "14583.5"
-  }, {
-    "product_type": "Organic Beans",
-    "revenue": "8487.0"
-  }, {
-    "product_type": "Housewares",
-    "revenue": "7290.0"
-  }, {
-    "product_type": "Gourmet Beans",
-    "revenue": "6798.0"
-  }, {
-    "product_type": "Clothing",
-    "revenue": "6188.0"
-  }, {
-    "product_type": "Regular syrup",
-    "revenue": "6084.8000000004513"
-  }, {
-    "product_type": "Espresso Beans",
-    "revenue": "5560.2499999999836"
-  }, {
-    "product_type": "Chai tea",
-    "revenue": "4301.2499999999745"
-  }, {
-    "product_type": "House blend Beans",
-    "revenue": "3294.0"
-  }, {
-    "product_type": "Herbal tea",
-    "revenue": "2729.7499999999932"
-  }, {
-    "product_type": "Drinking Chocolate",
-    "revenue": "2728.0399999999986"
-  }, {
-    "product_type": "Black tea",
-    "revenue": "2711.8499999999935"
-  }, {
-    "product_type": "Sugar free syrup",
-    "revenue": "2323.99999999996"
-  }, {
-    "product_type": "Organic Chocolate",
-    "revenue": "1679.5999999999942"
-  }, {
-    "product_type": "Green tea",
-    "revenue": "1470.75"
-  }, {
-    "product_type": "Green beans",
-    "revenue": "1340.0"
+    "revenue": "5%"
   }]
+
+//3 Lowes product type in coffe category
+[{
+
+}, {
+
+}, {
+  
+}]
+
+//trend of sales by month
+[{
+  "Store Location": "",
+  "Total Transaction": "",
+  "Month": ""
+}]
+
+//last table
