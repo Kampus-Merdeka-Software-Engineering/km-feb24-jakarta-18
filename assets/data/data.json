@@ -95,14 +95,92 @@ total Transaction
 
 //3 Lowes product type in coffe category
 [{
-
+   "Product type"; "Premium Brewed Coffe".
+   "Revenue": "40000"
 }, {
-
+   "Product type"; "Organic Brewed Coffe".
+   "Revenue": "38000"
 }, {
-  
+   "Product type"; "Drip Coffe".
+    "Revenue": "32000"
 }]
 
 //trend of sales by month
+[{
+   "store_location": "Astoria",
+   "month": "1",
+   "monthly_sales": "27275.659999999541"
+  }, {
+   "store_location": "Astoria",
+    "month": "2",
+    "monthly_sales": "25096.339999999578"
+  }, {
+    "store_location": "Astoria",
+    "month": "3",
+    "monthly_sales": "32822.4299999997"
+  }, {
+    "store_location": "Astoria",
+    "month": "4",
+    "monthly_sales": "39446.610000000073"
+  }, {
+    "store_location": "Astoria",
+    "month": "5",
+    "monthly_sales": "52409.760000000031"
+  }, {
+    "store_location": "Astoria",
+    "month": "6",
+    "monthly_sales": "55064.109999999964"
+  }, {
+    "store_location": "Lower Manhattan",
+    "month": "1",
+    "monthly_sales": "26543.829999999551"
+  }, {
+    "store_location": "Lower Manhattan",
+    "month": "2",
+    "monthly_sales": "25336.179999999589"
+  }, {
+    "store_location": "Lower Manhattan",
+    "month": "3",
+    "monthly_sales": "32869.499999999571"
+  }, {
+    "store_location": "Lower Manhattan",
+    "month": "4",
+    "monthly_sales": "39185.579999999463"
+  }, {
+    "store_location": "Lower Manhattan",
+    "month": "5",
+    "monthly_sales": "51671.750000000109"
+  }, {
+    "store_location": "Lower Manhattan",
+    "month": "6",
+    "monthly_sales": "54471.82"
+  }, {
+    "store_location": "Hell\u0027s Kitchen",
+    "month": "1",
+    "monthly_sales": "27818.549999999712"
+  }, {
+    "store_location": "Hell\u0027s Kitchen",
+    "month": "2",
+    "monthly_sales": "25705.999999999662"
+  }, {
+    "store_location": "Hell\u0027s Kitchen",
+    "month": "3",
+    "monthly_sales": "33117.469999999361"
+  }, {
+    "store_location": "Hell\u0027s Kitchen",
+    "month": "4",
+    "monthly_sales": "40290.039999999834"
+  }, {
+    "store_location": "Hell\u0027s Kitchen",
+    "month": "5",
+    "monthly_sales": "52599.529999999613"
+  }, {
+    "store_location": "Hell\u0027s Kitchen",
+    "month": "6",
+    "monthly_sales": "56942.97999999988"
+  }]
+}]
+
 [{
   "Store Location": "",
   "Total Transaction": "",
