@@ -1,1 +1,114 @@
+total sales
+[{
+    "Total Sales": "241470"
+}]
 
+//total revenue
+[{
+    "Total Revenue": "$698668"
+}]
+
+//average revenue
+[{
+    "Average Revenue": "$5"
+}]
+
+//average sales/item
+[{
+    "Average Sales/Item": "1.44"
+}]
+
+average revenue/item
+[{
+    "Average Revenue/Item": "$5"
+}]
+
+revenue contribution
+[{
+    "product_type": "Barista Espresso",
+    "revenue": "91311.399999993824"
+  }, {
+    "product_type": "Brewed Chai tea",
+    "revenue": "77081.95000000298"
+  }, {
+    "product_type": "Hot chocolate",
+    "revenue": "72416.0"
+  }, {
+    "product_type": "Gourmet brewed coffee",
+    "revenue": "70034.599999999016"
+  }, {
+    "product_type": "Brewed Black tea",
+    "revenue": "47932.0"
+  }, {
+    "product_type": "Brewed herbal tea",
+    "revenue": "47539.5"
+  }, {
+    "product_type": "Premium brewed coffee",
+    "revenue": "38781.150000000351"
+  }, {
+    "product_type": "Organic brewed coffee",
+    "revenue": "37746.500000001324"
+  }, {
+    "product_type": "Scone",
+    "revenue": "37051.5"
+  }, {
+    "product_type": "Drip coffee",
+    "revenue": "31984.0"
+  }, {
+    "product_type": "Pastry",
+    "revenue": "25615.25"
+  }, {
+    "product_type": "Brewed Green tea",
+    "revenue": "23852.5"
+  }, {
+    "product_type": "Biscotti",
+    "revenue": "19751.0"
+  }, {
+    "product_type": "Premium Beans",
+    "revenue": "14583.5"
+  }, {
+    "product_type": "Organic Beans",
+    "revenue": "8487.0"
+  }, {
+    "product_type": "Housewares",
+    "revenue": "7290.0"
+  }, {
+    "product_type": "Gourmet Beans",
+    "revenue": "6798.0"
+  }, {
+    "product_type": "Clothing",
+    "revenue": "6188.0"
+  }, {
+    "product_type": "Regular syrup",
+    "revenue": "6084.8000000004513"
+  }, {
+    "product_type": "Espresso Beans",
+    "revenue": "5560.2499999999836"
+  }, {
+    "product_type": "Chai tea",
+    "revenue": "4301.2499999999745"
+  }, {
+    "product_type": "House blend Beans",
+    "revenue": "3294.0"
+  }, {
+    "product_type": "Herbal tea",
+    "revenue": "2729.7499999999932"
+  }, {
+    "product_type": "Drinking Chocolate",
+    "revenue": "2728.0399999999986"
+  }, {
+    "product_type": "Black tea",
+    "revenue": "2711.8499999999935"
+  }, {
+    "product_type": "Sugar free syrup",
+    "revenue": "2323.99999999996"
+  }, {
+    "product_type": "Organic Chocolate",
+    "revenue": "1679.5999999999942"
+  }, {
+    "product_type": "Green tea",
+    "revenue": "1470.75"
+  }, {
+    "product_type": "Green beans",
+    "revenue": "1340.0"
+  }]
