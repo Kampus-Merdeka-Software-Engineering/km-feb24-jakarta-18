@@ -147,6 +147,16 @@ body{
     transform: scale(1.1);
 }
 
+.filter_store_location{
+    background-color: rgb(186,135,89);
+    border-radius: 3px;
+    color: rgb(50,44,43);
+    display: flex;
+    align-items: right;
+    gap: 5px;
+    padding: 2px 4px;
+
+}
 .scorecard_container{
     background-color:rgb(255, 252, 246);
     /* border-color: #f7f7f7; */
