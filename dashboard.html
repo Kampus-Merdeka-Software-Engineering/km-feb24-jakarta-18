@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css"/>
     <link rel="stylesheet" 
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css"/>
 
 </head>
 <body>
@@ -66,7 +67,7 @@
                             <span class="title">
                                 Total Sales (QTY)
                             </span>
-                            <span class="amount_value">
+                            <span class="amount_value totalSales">
                                 214,470
                             </span>
                         </div>
@@ -83,7 +84,7 @@
                             <span class="title">
                                 Total Revenue ($)
                             </span>
-                            <span class="amount_value">
+                            <span class="amount_value totalRevenue">
                                 $700,000
                             </span>
                         </div>
@@ -100,7 +101,7 @@
                             <span class="title">
                                 AVG Sales per Item (QTY)
                             </span>
-                            <span class="amount_value">
+                            <span class="amount_value AVGSalesQTY">
                                 1.44
                             </span>
                         </div>
@@ -115,9 +116,9 @@
                     <div class="scorecard_header">
                         <div class="amount">
                             <span class="title">
-                                AVG Revenue per item ($)
+                                AVG Revenue ($)
                             </span>
-                            <span class="amount_value">
+                            <span class="amount_value AVGRevenue">
                                 $5
                             </span>
                         </div>
@@ -132,27 +133,59 @@
         <!-- chart-content -->
         <div class="chart_container">
             <div class="chart_content">
-                <h3 class="main_title">Number fo Sales by Store</h3>
+                <h3 class="main_title">Number of Sales by Store</h3>
                 <canvas class="pieChart" id="doughnut"></canvas>
             </div>
             <div class="chart_content">
-                <h3 class="main_title">Number fo Sales by Store</h3>
+                <h3 class="main_title">Revenue Contribution by Product Categories</h3>
                 <canvas class="barRevenue" id="barRevenue"></canvas>
             </div>
             <div class="chart_content">
-                <h3 class="main_title">Number fo Sales by Store</h3>
-                <canvas class="barRevenue" id="barRevenue"></canvas>
+                <h3 class="main_title">Trend of Revenue by Months</h3>
+                <canvas class="lineTrend" id="lineTrend"></canvas>
             </div>
         </div>
 <!-- containerbawah -->
         <div class="chart_container">
-            <div class="chart_content">
-                <h3 class="main_title">Number fo Sales by Store</h3>
-                <canvas class="pieChart" id="doughnut"></canvas>
-            </div>
-            <div class="chart_content">
-                <h3 class="main_title">Number fo Sales by Store</h3>
-                <canvas class="barRevenue" id="barRevenue"></canvas>
+            <div class="chart_content_table">
+                <h3 class="main_title_table">Transaction Data</h3>
+                <table id="myTable" class="myTable">
+                    <thead>
+                        <tr>
+                            <th>Product Category</th>
+                            <th>Product Type</th>
+                            <th>Total Revenue ($)</th>
+                            <th>Avg Revenue ($)</th>
+                            <th>Transaction QTY</th>
+                        </tr>
+                    </thead>
+                    <tbody id="data-output">
+                        <!-- <tr>
+                            <td>Row 1 Data 1</td>
+                            <td>Row 1 Data 2</td>
+                            <td>Row 1 Data 3</td>
+                            <td>Row 1 Data 4</td>
+                        </tr>
+                        <tr>
+                            <td>Row 2 Data 1</td>
+                            <td>Row 2 Data 2</td>
+                            <td>Row 2 Data 3</td>
+                            <td>Row 2 Data 4</td>
+                        </tr>
+                        <tr>
+                            <td>Row 3 Data 1</td>
+                            <td>Row 3 Data 2</td>
+                            <td>Row 3 Data 3</td>
+                            <td>Row 3 Data 4</td>
+                        </tr>
+                        <tr>
+                            <td>Row 4 Data 1</td>
+                            <td>Row 4 Data 2</td>
+                            <td>Row 4 Data 3</td>
+                            <td>Row 4 Data 4</td>
+                        </tr> -->
+                    </tbody>
+                </table>
             </div>
         </div>
         <!-- <script>
@@ -192,6 +225,9 @@
         </div>
         <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-        <script src="assets/js/index.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+        <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+        <script src="assets/js/index.js" type="module"></script>
+
 </body>
 </html>
