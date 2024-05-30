@@ -62,20 +62,26 @@
         <div class="scorecard_container">
             <h3 class="main_title">SCORECARD</h3>
             <!---filter Store Location-->
-            <div class="filter_store_location">
-                <label for="storeLocation">Filter by Store Location:</label>
-                <select id="storeLocation">
-                <option value="all">All</option>
+            <div class="filter">
+                <div class="select">
+                    <span class="selected">Filter by Store Location:</span>
+                    <div class="caret"></div> 
+                </div>
+                <select id="list">
+                <option class="active" value="all">All</option>
                 <option value="Astoria">Astoria</option>
                 <option value="hellsKitchen">Hells Kitchen</option>
                 <option value="lowerManhattan">Lower Manhattan</option>
                 </select>
             </div>
             <!---filter Product Category-->
-            <div class="filter_product_category">
-                <label for="productCategory">Filter by Store Location:</label>
-                <select id="productCategory">
-                <option value="all">All</option>
+            <div class="filter">
+                <div class="select">
+                    <span class="selected">Filter by Product Category:</span>
+                    <div class="caret"></div> 
+                </div>
+                <select id="list">
+                <option class="active" value="all">All</option>
                 <option value="coffee">Coffee</option>
                 <option value="tea">Tea</option>
                 <option value="bakery">Bakery</option>
