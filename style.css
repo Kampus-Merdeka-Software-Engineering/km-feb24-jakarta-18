@@ -192,7 +192,7 @@ body{
     transform: rotate(180deg);
 }
 
-.list{
+.storeLocation{
     list-style: none;
     padding: 0.2em 0.5em;
     background: #323741;
@@ -211,11 +211,38 @@ body{
     z-index: 1;
 }
 
-.list option{
+.productCategory{
+    list-style: none;
+    padding: 0.2em 0.5em;
+    background: #323741;
+    border: 1px #363a43 solid;
+    box-shadow: 0 0.5em 1em1em rgba(0, 0, 0, 0.2);
+    border-radius: 0.5em;
+    color: #9fa5b5;
+    position: absolute;
+    top: 3em;
+    left: 50%;
+    width: 100%;
+    transform: translateX(-50%);
+    opacity: 0;
+    display: none;
+    transition: 0.2s;
+    z-index: 1;
+}
+
+.storeLocation option{
     transform: rotate(180deg);
 }
 
-.list option:hover{
+.productCategory option{
+    transform: rotate(180deg);
+}
+
+.storeLocation option:hover{
+    transform: rotate(180deg);
+}
+
+.productCategory option:hover{
     transform: rotate(180deg);
 }
 

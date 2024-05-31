@@ -67,7 +67,7 @@
                     <span class="selected">Filter by Store Location:</span>
                     <div class="caret"></div> 
                 </div>
-                <select id="list">
+                <select id="storeLocation">
                 <option class="active" value="all">All</option>
                 <option value="Astoria">Astoria</option>
                 <option value="hellsKitchen">Hells Kitchen</option>
@@ -80,7 +80,7 @@
                     <span class="selected">Filter by Product Category:</span>
                     <div class="caret"></div> 
                 </div>
-                <select id="list">
+                <select id="ProductCtegory">
                 <option class="active" value="all">All</option>
                 <option value="coffee">Coffee</option>
                 <option value="tea">Tea</option>
@@ -93,75 +93,80 @@
                 <option value="packagedChocolate">Packaged Chocolate</option>
                 </select>
             </div>
-            <div class="scorecard_content">
-                <div class="scorecard">
-                    <div class="scorecard_header">
-                        <div class="amount">
-                            <span class="title">
-                                Total Sales (QTY)
-                            </span>
-                            <span class="amount_value totalSales">
-                                214,470
-                            </span>
+            
+            <div class="sales-data" id="salesData">
+                <!--End of Filter-->
+                <div class="scorecard_content">
+                    <div class="scorecard">
+                        <div class="scorecard_header">
+                            <div class="amount">
+                                <span class="title">
+                                    Total Sales (QTY)
+                                </span>
+                                <span class="amount_value totalSales">
+                                    214,470
+                                </span>
+                            </div>
+                            <i class="fa fa-line-chart icon"></i>
                         </div>
-                        <i class="fa fa-line-chart icon"></i>
+                        <span class="scorecard_detail">
+                            isi growth%
+                        </span>
                     </div>
-                    <span class="scorecard_detail">
-                        isi growth%
-                    </span>
-                </div>
-                <!-- Total Revenue -->
-                <div class="scorecard">
-                    <div class="scorecard_header">
-                        <div class="amount">
-                            <span class="title">
-                                Total Revenue ($)
-                            </span>
-                            <span class="amount_value totalRevenue">
-                                $700,000
-                            </span>
+                    <!-- Total Revenue -->
+                    <div class="scorecard">
+                        <div class="scorecard_header">
+                            <div class="amount">
+                                <span class="title">
+                                    Total Revenue ($)
+                                </span>
+                                <span class="amount_value totalRevenue">
+                                    $700,000
+                                </span>
+                            </div>
+                            <i class="fas fa-dollar-sign icon"></i>
                         </div>
-                        <i class="fas fa-dollar-sign icon"></i>
+                        <span class="scorecard_detail">
+                            isi growth%
+                        </span>
                     </div>
-                    <span class="scorecard_detail">
-                        isi growth%
-                    </span>
-                </div>
-                <!-- AVG Sales -->
-                <div class="scorecard">
-                    <div class="scorecard_header">
-                        <div class="amount">
-                            <span class="title">
-                                AVG Sales per Item (QTY)
-                            </span>
-                            <span class="amount_value AVGSalesQTY">
-                                1.44
-                            </span>
+                    <!-- AVG Sales -->
+                    <div class="scorecard">
+                        <div class="scorecard_header">
+                            <div class="amount">
+                                <span class="title">
+                                    AVG Sales per Item (QTY)
+                                </span>
+                                <span class="amount_value AVGSalesQTY">
+                                    1.44
+                                </span>
+                            </div>
+                            <i class="fas fa-chart-bar icon"></i>
                         </div>
-                        <i class="fas fa-chart-bar icon"></i>
+                        <span class="scorecard_detail">
+                            isi growth%
+                        </span>
                     </div>
-                    <span class="scorecard_detail">
-                        isi growth%
-                    </span>
-                </div>
-                <!-- AVG Revenue per item  -->
-                <div class="scorecard">
-                    <div class="scorecard_header">
-                        <div class="amount">
-                            <span class="title">
-                                AVG Revenue ($)
-                            </span>
-                            <span class="amount_value AVGRevenue">
-                                $5
-                            </span>
+                    <!-- AVG Revenue per item  -->
+                    <div class="scorecard">
+                        <div class="scorecard_header">
+                            <div class="amount">
+                                <span class="title">
+                                    AVG Revenue ($)
+                                </span>
+                                <span class="amount_value AVGRevenue">
+                                    $5
+                                </span>
+                            </div>
+                            <i class="fas fa-dollar-sign icon"></i>
                         </div>
-                        <i class="fas fa-dollar-sign icon"></i>
+                        <span class="scorecard_detail">
+                            isi growth%
+                        </span>
                     </div>
-                    <span class="scorecard_detail">
-                        isi growth%
-                    </span>
                 </div>
             </div>
+            <script src="script.js"></script>
         </div>
         <!-- chart-content -->
         <div class="chart_container">
