@@ -59,40 +59,61 @@ document.querySelector(".AVGSalesQTY").innerHTML = AVGSalesQTY(
 document.querySelector(".AVGRevenue").innerHTML =
   "$" + AVGRevenue(totalTransaction, transactionTotal).toFixed(2);
 
-// Pie chart
-function createChart(labels, datasets, type, options, element) {
-  // const labels = ["Aria", "Hell's Kitchen", "Lower Manhattan"];
+
+// function createChart(labels, datasets, type, options, element) {
+//   // const labels = ["Aria", "Hell's Kitchen", "Lower Manhattan"];
+//   const data = {
+//     labels: labels,
+//     // datasets: [
+//     //   {
+//     //     label: "My First Dataset",
+//     //     data: [65, 59, 80],
+//     //     backgroundColor: ["red", "blue", "green"],
+//     //   },
+//     // ],
+//     datasets: datasets,
+//   };
+//   const config = {
+//     type: type,
+//     data: data,
+//     options: options,
+//     // options: {
+//     //   scales: {
+//     //     y: {
+//     //       beginAtZero: true,
+//     //     },
+//     //   },
+//     // },
+//   };
+//   // const ctx = document.getElementById("doughnut");
+//   const ctx = document.getElementById(element);
+//   // console.log(window);
+
+//   // const pieChart = new Chart(ctx, config);
+//   // const myChart = new Chart(ctx, config);
+//   return new Chart(ctx, config);
+// }
+
+function createChart(
+  labels,
+  datasets,
+  type,
+  options,
+  element,
+  filter = () => true
+) {
   const data = {
     labels: labels,
-    // datasets: [
-    //   {
-    //     label: "My First Dataset",
-    //     data: [65, 59, 80],
-    //     backgroundColor: ["red", "blue", "green"],
-    //   },
-    // ],
-    datasets: datasets,
+    datasets: datasets.filter((dataset) => filter(dataset)),
   };
 
   const config = {
-    // type: "doughnut",
     type: type,
     data: data,
     options: options,
-    // options: {
-    //   scales: {
-    //     y: {
-    //       beginAtZero: true,
-    //     },
-    //   },
-    // },
   };
-  // const ctx = document.getElementById("doughnut");
-  const ctx = document.getElementById(element);
-  // console.log(window);
 
-  // const pieChart = new Chart(ctx, config);
-  // const myChart = new Chart(ctx, config);
+  const ctx = document.getElementById(element);
   return new Chart(ctx, config);
 }
 
@@ -105,7 +126,7 @@ function PersentaseSales(datasetPie, totalTransaction){
   return presentasePie;
 
 }
-
+  // Pie-Doughnut-chart
 const pieChart = createChart(
 datasetPie.map(row=>row.nama),
   [
@@ -164,6 +185,45 @@ const barRevenue = createChart(
   "barRevenue"
 );
 
+// Create an object to store the revenue for each product type
+let typeRevenue = {};
+for (let index = 0; index < datasets.length; index++) {
+  const dataset = datasets[index];
+  const type = dataset.product_type;
+  if (typeRevenue[type]) {
+    typeRevenue[type] += Number(dataset.transaction_total);
+  } else {
+    typeRevenue[type] = Number(dataset.transaction_total);
+  }
+}
+
+// Sort the object by revenue in descending order and get the top 5 types
+let sortedTypes = Object.entries(typeRevenue)
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 5);
+
+const barRevenueType = createChart(
+  sortedTypes.map((type) => type[0]),
+  [
+    {
+      label: "Revenue by Product Type",
+      data: sortedCategories.map((type) => type[1]),
+      backgroundColor: [
+        "rgb(237, 116, 112)",
+        "rgb(130, 105, 90)",
+        "rgb(189, 203, 137)",
+        "rgb(255, 206, 86)",
+        "rgb(75, 192, 192)",
+      ],
+    },
+  ],
+  "bar",
+  { indexAxis: "y" },
+  "barRevenueType"
+);
+
+
+
 // const barRevenue = createChart(
 //   ["Coffee", "Tea", "Bakery"],
 //   [
@@ -212,6 +272,8 @@ const barRevenue = createChart(
 //   { indexAxis: "x" },
 //   "lineTrend"
 // );
+
+//Line-chart
 
 // Extract revenue data by month for each store location
 const storeLocations = [...new Set(datasets.map((dataset) => dataset.store_location))];
@@ -266,6 +328,22 @@ const lineTrend = createChart(
     ],
   },
   "lineTrend"
+);
+
+
+const lineTrendHours = createChart(
+  labels,
+  data,
+  "line",
+  {
+    indexAxis: "x",
+    borderColor: [
+      "rgb(237, 116, 112)",
+      "rgb(130, 105, 90)",
+      "rgb(189, 203, 137)",
+    ],
+  },
+  "lineTrendHours"
 );
 
 // Function to generate a random color
@@ -440,3 +518,17 @@ populateTable();
 // function sortTableByColumn(table, column, asc =true){
 
 // }
+
+
+
+
+//SIDEBAR
+// const sidebar = document.getElementById("sidebar");
+
+// sidebar.addEventListener("mouseover", () => {
+//   sidebar.classList.add("expanded");
+// });
+
+// sidebar.addEventListener("mouseout", () => {
+//   sidebar.classList.remove("expanded");
+// });
