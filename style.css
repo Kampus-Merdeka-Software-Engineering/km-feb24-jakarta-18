@@ -13,7 +13,7 @@ body{
     display: flex;
 }
 
-/* .sidebar{
+.sidebar{
     position: sticky;
     top: 0;
     left: 0;
@@ -25,25 +25,12 @@ body{
     overflow: hidden;
     transition: all 0.5s linear;
     background: rgb(186,135,89);
-} */
-
-.sidebar{
-    position: sticky;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 110px;
-    height: 100vh;
-    padding: 0 1.7rem;
-    color: #f7f7f7;
-    overflow: hidden;
-    transition: width 0.5s linear; /* only transition the width property */
-    background: rgb(186,135,89);
+    
 }
-#sidebar:hover{
-    width: 350px !important;
+/* .sidebar:hover{
+    width: 350px;
     transition: 0.5s;
-}
+} */
 
 .logo{
     height: 90px;
@@ -223,13 +210,15 @@ body{
 .scorecard_content{
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
     gap: 2rem;
 }
 
 .scorecard_title{
     color: rgb(50,44,43);
     padding-bottom: 10px;
-    font-size: 15px;
+    font-size: 20px;
 }
 
 .scorecard{
@@ -237,7 +226,7 @@ body{
     border-radius: 10px;
     padding: 1.2rem;
     width: 290px;
-    height: 150px;
+    height: 110px;
     display: flex;
     flex-direction:column;
     justify-content: space-between;
@@ -258,8 +247,8 @@ body{
     flex-direction: column;
 }
 .title{
-    font-size: 12px;
-    font-weight: 400;
+    font-size: 15px;
+    font-weight: 500;
 }
 .amount_value{
     font-size: 28px;
@@ -307,20 +296,12 @@ body{
     height: 100px;
 }
 
-/* #bar{
-
-}
-
-#table{
-
-} */
-
 .main_title_table{
     display: flex;
     justify-content:left;
 }
 
-.myTable{
+#myTable{
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9em;
@@ -330,26 +311,73 @@ body{
     box-shadow: 0 0 20px rgb(143, 143, 143, 15);
 }
 
-.myTable thead tr{
+#myTable thead tr{
     background-color: rgb(130, 105, 90);
     color: azure;
     text-align: left;
     font-weight: bold;
 }
 
-.myTable th,
-.myTable td{
+#myTable th,
+#myTable td{
     padding: 12px 15px;
 }
 
-.myTable tbody tr{
+#myTable tbody tr{
     border-bottom: 1px solid rgb(130, 105, 90);
 }
 
-.myTable tbody tr:nth-of-type(even){
+#myTable tbody tr:nth-of-type(even){
     background-color: rgb(230, 219, 202);
 }
 
-.myTable tbody tr:last-of-type{
+#myTable tbody tr:last-of-type{
     border-bottom: 2px solid rgb(130, 105, 90);
 }
+
+.chart_container_table {
+  overflow-x: auto;  /* Enable horizontal scrolling for narrow screens */
+}
+
+.filter-dropdown{
+    
+}
+
+
+/* ======= Footer ======= */
+/* footer{
+    background-color: rgb(102, 116, 123);
+    position: relative;
+    width: 100%;
+    min-height: 200px;
+    padding: 1.5rem 1rem;
+}
+
+.footerContainer {
+    max-width: 100vw;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+} */
+
+/* Responsiveness */
+/* Desktop styles */
+@media (min-width: 1200px) {
+  /* styles for desktop screens */
+}
+
+/* Tablet styles */
+@media (min-width: 768px) and (max-width: 1199px) {
+  /* styles for tablet screens */
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+  /* styles for mobile screens */
+}
+@media (max-width: 768px) {
+  .sidebar {
+    width: 80px; /* Adjust the width for smaller screens */
+  }
+}
+
