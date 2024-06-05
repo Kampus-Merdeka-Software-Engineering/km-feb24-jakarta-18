@@ -1,19 +1,14 @@
-import datasets from "../CoffeeShopSales.json" assert { type: "json" };
+import datasets from "../CoffeeShopSales.json" with { type: "json" };
 
 console.log(datasets);
 let transactionTotal = datasets.length;
 let totalRevenue = 0;
 let totalQTY = 0;
 let totalTransaction = 0;
+
 //chart
 let datasetPie = [
-  // {
-  //   id:'idToko',
-  //   nama:'namaToko',
-  //   value:'totaltransaksi ditoko/totalsemua*100%'
-  // }
 ];
-
 for (let index = 0; index < datasets.length; index++) {
   const dataset = datasets[index];
   totalRevenue += Number(dataset.transaction_total);
@@ -59,40 +54,26 @@ document.querySelector(".AVGSalesQTY").innerHTML = AVGSalesQTY(
 document.querySelector(".AVGRevenue").innerHTML =
   "$" + AVGRevenue(totalTransaction, transactionTotal).toFixed(2);
 
-// Pie chart
-function createChart(labels, datasets, type, options, element) {
-  // const labels = ["Aria", "Hell's Kitchen", "Lower Manhattan"];
+function createChart(
+  labels,
+  datasets,
+  type,
+  options,
+  element,
+  filter = () => true
+) {
   const data = {
     labels: labels,
-    // datasets: [
-    //   {
-    //     label: "My First Dataset",
-    //     data: [65, 59, 80],
-    //     backgroundColor: ["red", "blue", "green"],
-    //   },
-    // ],
-    datasets: datasets,
+    datasets: datasets.filter((dataset) => filter(dataset)),
   };
 
   const config = {
-    // type: "doughnut",
     type: type,
     data: data,
     options: options,
-    // options: {
-    //   scales: {
-    //     y: {
-    //       beginAtZero: true,
-    //     },
-    //   },
-    // },
   };
-  // const ctx = document.getElementById("doughnut");
-  const ctx = document.getElementById(element);
-  // console.log(window);
 
-  // const pieChart = new Chart(ctx, config);
-  // const myChart = new Chart(ctx, config);
+  const ctx = document.getElementById(element);
   return new Chart(ctx, config);
 }
 
@@ -105,7 +86,7 @@ function PersentaseSales(datasetPie, totalTransaction){
   return presentasePie;
 
 }
-
+  // Pie-Doughnut-chart
 const pieChart = createChart(
 datasetPie.map(row=>row.nama),
   [
@@ -164,279 +145,445 @@ const barRevenue = createChart(
   "barRevenue"
 );
 
-// const barRevenue = createChart(
-//   ["Coffee", "Tea", "Bakery"],
-//   [
-//     {
-//       label: "My First Dataset",
-//       data: [65, 59, 80],
-//       backgroundColor: [
-//         "rgb(237, 116, 112)",
-//         "rgb(130, 105, 90)",
-//         "rgb(189, 203, 137)",
-//       ],
-//     },
-//   ],
-//   "bar",
-//   { indexAxis: "y" },
-//   "barRevenue"
-// );
 
-//lineChart
-// const lineTrend = createChart(
-//   ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-//   [
-//     {
-//       label: "Aria",
-//       data: [65, 59, 80, 81, 56, 55], // Replace this with the actual data for Aria
-//       borderColor: "rgb(237, 116, 112)",
-//       backgroundColor: "rgb(237, 116, 112)",
-//       tension: 0.1,
-//     },
-//     {
-//       label: "Hell's Kitchen",
-//       data: [45, 69, 70, 71, 66, 65], // Replace this with the actual data for Hell's Kitchen
-//       borderColor: "rgb(130, 105, 90)",
-//       backgroundColor: "rgb(130, 105, 90)",
-//       tension: 0.1,
-//     },
-//     {
-//       label: "Lower Manhattan",
-//       data: [75, 89, 70, 71, 86, 85], // Replace this with the actual data for Lower Manhattan
-//       borderColor: "rgb(189, 203, 137)",
-//       backgroundColor: "rgb(189, 203, 137)",
-//       tension: 0.1,
-//     },
-//   ],
-//   "line",
-//   { indexAxis: "x" },
-//   "lineTrend"
-// );
+// Create an object to store the revenue for each product type
+// Bar chart: Revenue Contribution by Product Type
+let typeRevenue = {};
+for (let index = 0; index < datasets.length; index++) {
+  const dataset = datasets[index];
+  const type = dataset.product_type;
+  if (typeRevenue[type]) {
+    typeRevenue[type] += Number(dataset.transaction_total);
+  } else {
+    typeRevenue[type] = Number(dataset.transaction_total);
+  }
+}
 
-// Extract revenue data by month for each store location
-const storeLocations = [...new Set(datasets.map((dataset) => dataset.store_location))];
+let sortedTypes = Object.entries(typeRevenue)
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 5);
+
+const barRevenueType = createChart(
+  sortedTypes.map((type) => type[0]),
+  [
+    {
+      label: "Revenue by Product Type",
+      data: sortedTypes.map((type) => type[1]),
+      backgroundColor: [
+        "rgb(237, 116, 112)",
+        "rgb(130, 105, 90)",
+        "rgb(189, 203, 137)",
+        "rgb(255, 206, 86)",
+        "rgb(75, 192, 192)",
+      ],
+    },
+  ],
+  "bar",
+  { indexAxis: "y" },
+  "barRevenueType"
+);
+
+// Dropdown filter for product categories
+let categories = new Set(datasets.map(dataset => dataset.product_category));
+categories = ["All", ...categories];
+
+// Populate the dropdown
+const categoryDropdown = document.getElementById('categoryDropdown');
+categories.forEach(category => {
+  const option = document.createElement('option');
+  option.value = category;
+  option.text = category;
+  categoryDropdown.appendChild(option);
+});
+
+
+// Dropdown filter for product categories
+let lokasitoko = new Set(datasets.map(dataset => dataset.store_location));
+lokasitoko = ["All", ...lokasitoko];
+
+// Populate the dropdown
+const storeDropdown = document.getElementById('storeDropdown');
+lokasitoko.forEach(storelocation => {
+  const option = document.createElement('option');
+  option.classList.add('lokasitoko');
+  option.value = storelocation;
+  option.text = storelocation;
+  storeDropdown.appendChild(option);
+});
+
+
+// Line chart: trend of revenue by month
+// Define a mapping of month numbers to month names
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+// Extract store locations from datasets
+const storeLocations = [...new Set(datasets.map(dataset => dataset.store_location))];
+
+// Calculate revenue by month for each store location
 const revenueByMonth = storeLocations.reduce((acc, storeLocation) => {
   acc[storeLocation] = {};
-  datasets.forEach((dataset) => {
+  datasets.forEach(dataset => {
     if (dataset.store_location === storeLocation) {
-      // const month = dataset.transaction_date.split('-')[1]; // assuming transaction_date is in YYYY-MM-DD format
-      const month = dataset.transaction_date.split("-")[0]; //assuming transaction_date is in MM-DD-YYYY format
+      const month = dataset.transaction_date.split("/")[0]; // Assuming MM/DD/YYYY format
       const revenue = Number(dataset.transaction_total);
-      if (!acc[storeLocation][month]) {
-        acc[storeLocation][month] = 0;
-      }
-      acc[storeLocation][month] += revenue;
+      acc[storeLocation][month] = (acc[storeLocation][month] || 0) + revenue;
     }
   });
   return acc;
 }, {});
 
-// Create labels and data arrays for the line chart
-const labels = Object.keys(revenueByMonth[storeLocations[0]]);
-const data = storeLocations.map((storeLocation, index) => {
+// Sort the months and map them to month names
+const sortedMonthNumbers = Object.keys(revenueByMonth[storeLocations[0]]).sort((a, b) => a - b);
+const monthLabels = sortedMonthNumbers.map(monthNumber => monthNames[monthNumber - 1]);
+
+// Prepare the data for the line chart
+const lineDataByMonth = storeLocations.map((storeLocation, index) => {
   return {
     label: storeLocation,
-    data: labels.map((month) => revenueByMonth[storeLocation][month] || 0),
-    // borderColor: getRandomColor(), // generate a random color for each store location
+    data: sortedMonthNumbers.map(month => revenueByMonth[storeLocation][month] || 0),
     borderColor: [
       "rgb(237, 116, 112)",
       "rgb(130, 105, 90)",
       "rgb(189, 203, 137)",
-    ][index],
+    ][index % 3],
     backgroundColor: [
-      "rgb(237, 116, 112)",
-      "rgb(130, 105, 90)",
-      "rgb(189, 203, 137)",
-    ], 
+      "rgba(237, 116, 112, 0.2)",
+      "rgba(130, 105, 90, 0.2)",
+      "rgba(189, 203, 137, 0.2)",
+    ][index % 3],
     tension: 0.1,
   };
 });
 
 // Create the line chart
 const lineTrend = createChart(
-  labels,
-  data,
+  monthLabels,
+  lineDataByMonth,
   "line",
   {
     indexAxis: "x",
-    borderColor: [
-      "rgb(237, 116, 112)",
-      "rgb(130, 105, 90)",
-      "rgb(189, 203, 137)",
-    ],
   },
   "lineTrend"
 );
 
-// Function to generate a random color
-// function getRandomColor() {
-//   const letters = '0123456789ABCDEF';
-//   let color = '#';
-//   for (let i = 0; i < 6; i++) {
-//     color += letters[Math.floor(Math.random() * 16)];
-//   }
-//   return color;
+// Line chart: trend of revenue by hour
+const revenueByHour = storeLocations.reduce((acc, storeLocation) => {
+  acc[storeLocation] = {};
+  datasets.forEach(dataset => {
+    if (dataset.store_location === storeLocation) {
+      const hour = dataset.transaction_time.split(":")[0]; // Extract hour from transaction_time
+      const revenue = Number(dataset.transaction_total);
+      acc[storeLocation][hour] = (acc[storeLocation][hour] || 0) + revenue;
+    }
+  });
+  return acc;
+}, {});
+
+const hourLabels = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0')); // Generate hours from "00" to "23"
+const lineDataByHour = storeLocations.map((storeLocation, index) => {
+  return {
+    label: storeLocation,
+    data: hourLabels.map(hour => revenueByHour[storeLocation][hour] || 0),
+    borderColor: [
+      "rgb(237, 116, 112)",
+      "rgb(130, 105, 90)",
+      "rgb(189, 203, 137)",
+      "rgb(255, 206, 86)",
+      "rgb(75, 192, 192)"
+    ][index % 5], // Use different colors for different store locations
+    backgroundColor: [
+      "rgba(237, 116, 112, 0.2)",
+      "rgba(130, 105, 90, 0.2)",
+      "rgba(189, 203, 137, 0.2)",
+      "rgba(255, 206, 86, 0.2)",
+      "rgba(75, 192, 192, 0.2)"
+    ][index % 5],
+    tension: 0.1,
+  };
+});
+
+const lineTrendHours = createChart(
+  hourLabels,
+  lineDataByHour,
+  "line",
+  {
+    indexAxis: "x",
+  },
+  "lineTrendHours"
+);
+
+//DataTables
+let table = $("#myTable").DataTable({
+  // Add options for pagination, sorting, and searching here
+  responsive: true,
+  paging: true,
+  lengthChange: true,
+  searching: true,
+  ordering: true,
+  info: true,
+  data: datasets, // Assuming 'datasets' is your data source
+  columns: [
+    // Define columns and how to display data
+    { data: "store_location" },
+    { data: "product_category" },
+    { data: "product_type" },
+    { data: "transaction_total" }, // Access data for missing columns
+    { data: "transaction_qty" }, // Access data for missing columns
+    {
+      data: null, // Calculate and display average revenue
+      render: function (data, type, row) {
+        if (row.transaction_qty > 0) {
+          return `$${(row.transaction_total / row.transaction_qty).toFixed(
+            2
+          )}`;
+        } else {
+          return "$0.00";
+        }
+      },
+    },
+  ],
+});
+// $(document).ready(function () {
+// });
+
+//OPTION LISTENER Store Location
+const optiontoko = document.querySelector('#storeDropdown');
+// const mmm #cat
+// console.log(optiontoko);
+// namaconst.ad{
+
 // }
 
-//Table
+optiontoko.addEventListener('change', event=>{
+  const value = event.target.value;
+  let rows = datasets;
 
-let table = new DataTable("#myTable");
+  if (value!= "All") {
+    rows = datasets.filter(row=>row.store_location === value);
+    // rows = datasets.filter(row => row.product_category === value);
+    
+  }
+  // console.log(rows);
+let transactionTotal = rows.length;
+let totalRevenue = 0;
+let totalQTY = 0;
+let totalTransaction = 0;
+let categoryRevenue = {}; //bar chart revenue
+let datasetPie = []; //pie chart
+// const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+// const storeLocations = [];
 
+//chart
+for (let index = 0; index < rows.length; index++) {
+  //deklarasi dataset to rows
+  const dataset = rows[index];
 
-function populateTable() {
-  const tableBody = document.getElementById("data-output");
-  tableBody.innerHTML = ""; // clear the table body
+  totalRevenue += Number(dataset.transaction_total);
+  totalQTY += Number(dataset.transaction_qty);
+  totalTransaction += Number(dataset.transaction_total);
 
-  // Group datasets by product_type
-  const groupedDatasets = [];
-  const productTypes = [
-    ...new Set(datasets.map((dataset) => dataset.product_type)),
-  ];
-  productTypes.forEach((type) => {
-    const groupedDataset = {
-      type: type,
-      datasets: datasets.filter((dataset) => dataset.product_type === type),
-    };
-    groupedDatasets.push(groupedDataset);
-  });
+  //Ini untuk bar revenue
+  const category = dataset.product_category;
+  if (categoryRevenue[category]) {
+    categoryRevenue[category] += Number(dataset.transaction_total);
+  } else {
+    categoryRevenue[category] = Number(dataset.transaction_total);
+  }
 
-  // Iterate over groups and populate table
-  groupedDatasets.forEach((groupedDataset) => {
-    groupedDataset.datasets.forEach((dataset) => {
-      const row = document.createElement("tr");
-
-      // product_category
-      const categoryCell = document.createElement("td");
-      categoryCell.textContent = dataset.product_category;
-      row.appendChild(categoryCell);
-
-      // product_type
-      const typeCell = document.createElement("td");
-      typeCell.textContent = groupedDataset.type; // Use product_type as the value
-      row.appendChild(typeCell);
-
-      // total_sales
-      const totalSalesCell = document.createElement("td");
-      totalSalesCell.textContent = dataset.transaction_total;
-      row.appendChild(totalSalesCell);
-
-      // avg_total_sales
-      const avgTotalSalesCell = document.createElement("td");
-      const avgTotalSales =
-        groupedDataset.datasets.reduce(
-          (acc, current) => acc + current.transaction_total,
-          0
-        ) / groupedDataset.datasets.length;
-      avgTotalSalesCell.textContent = avgTotalSales.toFixed(2);
-      row.appendChild(avgTotalSalesCell);
-
-      // transaction_qty
-      const qtyCell = document.createElement("td");
-      qtyCell.textContent = dataset.transaction_qty;
-      row.appendChild(qtyCell);
-
-      // Avg_revenue_per_item
-      const avgRevenueCell = document.createElement("td");
-      const avgRevenue =
-        groupedDataset.datasets.reduce(
-          (acc, current) => acc + current.transaction_total,
-          0
-        ) /
-        groupedDataset.datasets.reduce(
-          (acc, current) => acc + current.transaction_qty,
-          0
-        );
-      avgRevenueCell.textContent = `$${avgRevenue.toFixed(2)}`;
-      row.appendChild(avgRevenueCell);
-
-      tableBody.appendChild(row);
+  //Filter Piechart
+  if (datasetPie.map((row) => row.id).includes(dataset.store_id)) {
+    datasetPie = datasetPie.map((row) => {
+      if (row.id === dataset.store_id) {
+        return {
+          ...row,
+          value: row.value + Number(dataset.transaction_total),
+        };
+      }
+      return row;
     });
-  });
+  } else {
+    datasetPie.push({
+      id: dataset.store_id,
+      nama: dataset.store_location,
+      value: Number(dataset.transaction_total),
+    });
+  }
+
+  //Filter Line Chart Months
+  // storeLocations.push(dataset.store_location);
 }
 
-populateTable();
+//Score Card Filter
+document.querySelector(".totalSales").innerHTML = transactionTotal;
+document.querySelector(".totalRevenue").innerHTML =
+  "$" + totalRevenue.toFixed(2);
+document.querySelector(".AVGSalesQTY").innerHTML = AVGSalesQTY(
+  totalQTY,
+  transactionTotal
+).toFixed(2);
 
-// function populateTable() {
-//   const tableBody = document.getElementById("data-output");
-//   tableBody.innerHTML = ""; // clear the table body
+document.querySelector(".AVGRevenue").innerHTML =
+  "$" + AVGRevenue(totalTransaction, transactionTotal).toFixed(2);
+///////////////////////////////////////////////////////////////////////
+//Pie Chart Filter manggil value
+  let backgroundColor = [
+        "rgb(237, 116, 112)",
+        "rgb(130, 105, 90)",
+        "rgb(189, 203, 137)",
+  ];
 
-//   datasets.forEach((dataset) => {
-//     const row = document.createElement("tr");
+  if (value == "Lower Manhattan") {
+      backgroundColor = ["rgb(237, 116, 112)"]  
+  }else if (value == "Astoria"){
+    backgroundColor = ["rgb(130, 105, 90)"]
+  }else if (value == "Hell's Kitchen"){
+    backgroundColor = ["rgb(189, 203, 137)"]
+  }
 
-//     // product_category
-//     const categoryCell = document.createElement("td");
-//     categoryCell.textContent = dataset.product_category;
-//     row.appendChild(categoryCell);
+  pieChart.data.labels= datasetPie.map(row=>row.nama);
+  pieChart.data.datasets = [
+    {
+      label: "My First Dataset",
+      data: PersentaseSales(datasetPie, totalTransaction),
+      backgroundColor: backgroundColor,
+    }
+  ]
+  pieChart.update();
 
-//     // product_type
-//     const typeCell = document.createElement("td");
-//     typeCell.textContent = dataset.product_type;
-//     row.appendChild(typeCell);
+//Filter Bar Chart:Revenue Category
+// Sort the object by revenue in descending order and get the top 5 categories
+let sortedCategories = Object.entries(categoryRevenue)
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 5);
 
-//     // total_sales
-//     const totalSalesCell = document.createElement("td");
-//     totalSalesCell.textContent = dataset.transaction_total;
-//     row.appendChild(totalSalesCell);
+// console.log(sortedCategories);
 
-//     // avg_total_sales
-//     const avgTotalSalesCell = document.createElement("td");
-//     const avgTotalSales =
-//       datasets.reduce((acc, current) => acc + current.transaction_total, 0) /
-//       datasets.length;
-//     avgTotalSalesCell.textContent = avgTotalSales.toFixed(2);
-//     row.appendChild(avgTotalSalesCell);
+barRevenue.data.labels = sortedCategories.map((category) => category[0]);
+barRevenue.data.datasets = [
+    {
+      label: "Revenue by Product Category",
+      data: sortedCategories.map((category) => category[1]),
+      backgroundColor: [
+        "rgb(237, 116, 112)",
+        "rgb(130, 105, 90)",
+        "rgb(189, 203, 137)",
+        "rgb(255, 206, 86)",
+        "rgb(75, 192, 192)",
+      ],
+    },
+  ]
+  barRevenue.update();
+  //////////////////////////////////////////
 
-//     // transaction_qty
-//     const qtyCell = document.createElement("td");
-//     qtyCell.textContent = dataset.transaction_qty;
-//     row.appendChild(qtyCell);
+  //Filter Line Chart Revenue Months
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-//     // Avg_revenue_per_item
-//     const avgRevenueCell = document.createElement("td");
-//     const avgRevenue =
-//       datasets.reduce((acc, current) => acc + current.transaction_total, 0) /
-//       datasets.reduce((acc, current) => acc + current.transaction_qty, 0);
-//     avgRevenueCell.textContent = `$${avgRevenue.toFixed(2)}`;
-//     row.appendChild(avgRevenueCell);
+// Extract store locations from datasets
+const storeLocations = [...new Set(rows.map(dataset => dataset.store_location))];
 
-//     tableBody.appendChild(row);
+// Calculate revenue by month for each store location
+const revenueByMonth = storeLocations.reduce((acc, storeLocation) => {
+  acc[storeLocation] = {};
+  rows.forEach(dataset => {
+    if (dataset.store_location === storeLocation) {
+      const month = dataset.transaction_date.split("/")[0]; // Assuming MM/DD/YYYY format
+      const revenue = Number(dataset.transaction_total);
+      acc[storeLocation][month] = (acc[storeLocation][month] || 0) + revenue;
+    }
+  });
+  return acc;
+}, {});
+
+// Sort the months and map them to month names
+const sortedMonthNumbers = Object.keys(revenueByMonth[storeLocations[0]]).sort((a, b) => a - b);
+const monthLabels = sortedMonthNumbers.map(monthNumber => monthNames[monthNumber - 1]);
+  let backgroundColorMonth = [
+    "rgb(237, 116, 112)",
+    "rgb(130, 105, 90)",
+    "rgb(189, 203, 137)",
+  ];
+
+  if (value == "Lower Manhattan") {
+    backgroundColor = ["rgb(237, 116, 112)"]
+  } else if (value == "Astoria") {
+    backgroundColor = ["rgb(130, 105, 90)"]
+  } else if (value == "Hell's Kitchen") {
+    backgroundColor = ["rgb(189, 203, 137)"]
+  }
+
+// Prepare the data for the line chart
+const lineDataByMonth = storeLocations.map((storeLocation, index) => {
+  return {
+    label: storeLocation,
+    data: sortedMonthNumbers.map(month => revenueByMonth[storeLocation][month] || 0),
+    borderColor:backgroundColor,
+    // backgroundColor: backgroundColorMonth,
+    tension: 0.1,
+  };
+});
+
+lineTrend.data.labels = monthLabels;
+lineTrend.data.datasets = lineDataByMonth;
+lineTrend.update();
+//////////////////////////////////////////////////////
+
+//Filter Tabel
+  table.clear();
+  table.rows.add(rows);
+  table.draw();
+
+}) 
+
+// Line chart: trend of revenue by month
+// Define a mapping of month numbers to month names
+// const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+// Extract store locations from datasets
+// const storeLocations = [...new Set(datasets.map(dataset => dataset.store_location))];
+
+// Calculate revenue by month for each store location
+// const revenueByMonth = storeLocations.reduce((acc, storeLocation) => {
+//   acc[storeLocation] = {};
+//   datasets.forEach(dataset => {
+//     if (dataset.store_location === storeLocation) {
+//       const month = dataset.transaction_date.split("/")[0]; // Assuming MM/DD/YYYY format
+//       const revenue = Number(dataset.transaction_total);
+//       acc[storeLocation][month] = (acc[storeLocation][month] || 0) + revenue;
+//     }
 //   });
-// }
+//   return acc;
+// }, {});
 
-// populateTable();
+// Sort the months and map them to month names
+// const sortedMonthNumbers = Object.keys(revenueByMonth[storeLocations[0]]).sort((a, b) => a - b);
+// const monthLabels = sortedMonthNumbers.map(monthNumber => monthNames[monthNumber - 1]);
 
+// Prepare the data for the line chart
+// const lineDataByMonth = storeLocations.map((storeLocation, index) => {
+//   return {
+//     label: storeLocation,
+//     data: sortedMonthNumbers.map(month => revenueByMonth[storeLocation][month] || 0),
+//     borderColor: [
+//       "rgb(237, 116, 112)",
+//       "rgb(130, 105, 90)",
+//       "rgb(189, 203, 137)",
+//     ][index % 3],
+//     backgroundColor: [
+//       "rgba(237, 116, 112, 0.2)",
+//       "rgba(130, 105, 90, 0.2)",
+//       "rgba(189, 203, 137, 0.2)",
+//     ][index % 3],
+//     tension: 0.1,
+//   };
+// });
+
+// Create the line chart
 // const lineTrend = createChart(
-//   ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-//   [
-//     {
-//       label: ["Aria", "Hell's Kitchen", "Lower Manhattan"],
-//       data: [65, 59, 80, 81, 56, 55],
-//       // fill: false,
-//       borderColor: "rgb(75, 192, 192)",
-//       backgroundColor: ["red", "blue", "green"],
-//       tension: 0.1,
-//     },
-//   ],
+//   monthLabels,
+//   lineDataByMonth,
 //   "line",
-//   { indexAxis: "y" },
+//   {
+//     indexAxis: "x",
+//   },
 //   "lineTrend"
 // );
-
-// const labels = Utils.months({ count: 7 });
-// const data = {
-//   labels: labels,
-//   datasets: [
-//     {
-//       label: "My First Dataset",
-//       data: [65, 59, 80, 81, 56, 55, 40],
-//       fill: false,
-//       borderColor: "rgb(75, 192, 192)",
-//       tension: 0.1,
-//     },
-//   ],
-// };
-
-//sort table
-// function sortTableByColumn(table, column, asc =true){
-
-// }
