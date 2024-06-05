@@ -12,38 +12,38 @@
   </head>
   <body>
     <div class="sidebar" id="sidebar">
-       <button class="toggle-btn" id="toggleBtn">
-            <i class="fas fa-arrow-right"></i>
-        </button>
-      <!-- <div class="logo">
-        <img src="assets/img/coffeeshop2.png" />
-      </div> -->
-      <ul class="menu">
-        <li class="active">
-          <a href="dashboard.html">
-            <i class="fas fa-tachometer-alt"></i>
-            <span>Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a href="report.html">
-            <i class="fas fa-file-alt"></i>
-            <span>Report</span>
-          </a>
-        </li>
-        <li>
-          <a href="about-us.html">
-            <i class="fas fa-mug-hot"></i>
-            <span>About Us</span>
-          </a>
-        </li>
-        <li class="logout">
-          <a href="login.html">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Logout</span>
-          </a>
-        </li>
-      </ul>
+      <div class="logo">
+        <div class="logo-content">
+            <img src="assets/img/coffeeshop2.png" class="logo1"/>
+            <span>CoffeeShop18</span>
+        </div>  
+      </div>
+        <ul class="menu">
+            <li class="active">
+                <a href="dashboard.html" >
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="report.html">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Report</span>
+                </a>
+            </li>
+            <li>
+                <a href="about-us.html">
+                    <i class="fas fa-mug-hot"></i>
+                    <span>About Us</span>
+                </a>
+            </li> 
+            <li class="logout">
+                <a href="/login.html">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
     </div>
 
     <div class="main">
@@ -161,6 +161,12 @@
       <!-- chart-content-tengah -->
       <div class="chart_container">
         <div class="chart_content1">
+          <div class="filter-dropdown">
+        <label for="storeDropdown">Filter by Store:</label>
+        <select id="storeDropdown">
+            <option value="All">Select All</option>
+        </select>
+    </div>
           <h3 class="main_title">Trend of Revenue by Months</h3>
           <canvas class="lineTrend" id="lineTrend"></canvas>
         </div>

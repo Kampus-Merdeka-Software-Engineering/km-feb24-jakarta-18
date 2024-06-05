@@ -1,19 +1,14 @@
-import datasets from "../CoffeeShopSales.json" assert { type: "json" };
+import datasets from "../CoffeeShopSales.json" with { type: "json" };
 
 console.log(datasets);
 let transactionTotal = datasets.length;
 let totalRevenue = 0;
 let totalQTY = 0;
 let totalTransaction = 0;
+
 //chart
 let datasetPie = [
-  // {
-  //   id:'idToko',
-  //   nama:'namaToko',
-  //   value:'totaltransaksi ditoko/totalsemua*100%'
-  // }
 ];
-
 for (let index = 0; index < datasets.length; index++) {
   const dataset = datasets[index];
   totalRevenue += Number(dataset.transaction_total);
@@ -58,41 +53,6 @@ document.querySelector(".AVGSalesQTY").innerHTML = AVGSalesQTY(
 
 document.querySelector(".AVGRevenue").innerHTML =
   "$" + AVGRevenue(totalTransaction, transactionTotal).toFixed(2);
-
-
-// function createChart(labels, datasets, type, options, element) {
-//   // const labels = ["Aria", "Hell's Kitchen", "Lower Manhattan"];
-//   const data = {
-//     labels: labels,
-//     // datasets: [
-//     //   {
-//     //     label: "My First Dataset",
-//     //     data: [65, 59, 80],
-//     //     backgroundColor: ["red", "blue", "green"],
-//     //   },
-//     // ],
-//     datasets: datasets,
-//   };
-//   const config = {
-//     type: type,
-//     data: data,
-//     options: options,
-//     // options: {
-//     //   scales: {
-//     //     y: {
-//     //       beginAtZero: true,
-//     //     },
-//     //   },
-//     // },
-//   };
-//   // const ctx = document.getElementById("doughnut");
-//   const ctx = document.getElementById(element);
-//   // console.log(window);
-
-//   // const pieChart = new Chart(ctx, config);
-//   // const myChart = new Chart(ctx, config);
-//   return new Chart(ctx, config);
-// }
 
 function createChart(
   labels,
@@ -222,196 +182,10 @@ const barRevenueType = createChart(
   { indexAxis: "y" },
   "barRevenueType"
 );
-// let typeRevenue = {};
-// for (let index = 0; index < datasets.length; index++) {
-//   const dataset = datasets[index];
-//   const type = dataset.product_type;
-//   if (typeRevenue[type]) {
-//     typeRevenue[type] += Number(dataset.transaction_total);
-//   } else {
-//     typeRevenue[type] = Number(dataset.transaction_total);
-//   }
-// }
-
-// // Sort the object by revenue in descending order and get the top 5 types
-// let sortedTypes = Object.entries(typeRevenue)
-//   .sort((a, b) => b[1] - a[1])
-//   .slice(0, 5);
-
-// const barRevenueType = createChart(
-//   sortedTypes.map((type) => type[0]), // Corrected variable name
-//   [
-//     {
-//       label: "Revenue by Product Type",
-//       data: sortedTypes.map((type) => type[1]), // Corrected variable name
-//       backgroundColor: [
-//         "rgb(237, 116, 112)",
-//         "rgb(130, 105, 90)",
-//         "rgb(189, 203, 137)",
-//         "rgb(255, 206, 86)",
-//         "rgb(75, 192, 192)",
-//       ],
-//     },
-//   ],
-//   "bar",
-//   { indexAxis: "y" },
-//   "barRevenueType"
-// );
 
 // Dropdown filter for product categories
-const categoryDropdown = document.getElementById("categoryDropdown");
-const uniqueCategories = [...new Set(datasets.map(dataset => dataset.product_category))];
-
-uniqueCategories.forEach(category => {
-  const option = document.createElement("option");
-  option.value = category;
-  option.text = category;
-  categoryDropdown.appendChild(option);
-});
-
-categoryDropdown.addEventListener("change", function() {
-  const selectedCategory = this.value;
-  const filteredDatasets = datasets.filter(dataset => dataset.product_category === selectedCategory || selectedCategory === "All");
-  
-  // Update Revenue Contribution by Product Type chart
-  const filteredTypeRevenue = filteredDatasets.reduce((acc, dataset) => {
-    const type = dataset.product_type;
-    acc[type] = (acc[type] || 0) + Number(dataset.transaction_total);
-    return acc;
-  }, {});
-  
-  const sortedFilteredTypes = Object.entries(filteredTypeRevenue).sort((a, b) => b[1] - a[1]);
-  
-  const newBarRevenueType = createChart(
-    sortedFilteredTypes.map((type) => type[0]),
-    [
-      {
-        label: "Revenue by Product Type",
-        data: sortedFilteredTypes.map((type) => type[1]),
-        backgroundColor: [
-          "rgb(237, 116, 112)",
-          "rgb(130, 105, 90)",
-          "rgb(189, 203, 137)",
-          "rgb(255, 206, 86)",
-          "rgb(75, 192, 192)",
-        ],
-      },
-    ],
-    "bar",
-    { indexAxis: "y" },
-    "barRevenueType"
-  );
-});
-
-//Line Chart
-// Extract revenue data by month for each store location
-// const storeLocations = [...new Set(datasets.map((dataset) => dataset.store_location))];
-// const revenueByMonth = storeLocations.reduce((acc, storeLocation) => {
-//   acc[storeLocation] = {};
-//   datasets.forEach((dataset) => {
-//     if (dataset.store_location === storeLocation) {
-//       // const month = dataset.transaction_date.split('-')[1]; // assuming transaction_date is in YYYY-MM-DD format
-//       const month = dataset.transaction_date.split("-")[0]; //assuming transaction_date is in MM-DD-YYYY format
-//       const revenue = Number(dataset.transaction_total);
-//       if (!acc[storeLocation][month]) {
-//         acc[storeLocation][month] = 0;
-//       }
-//       acc[storeLocation][month] += revenue;
-//     }
-//   });
-//   return acc;
-// }, {});3
-
-// // Create labels and data arrays for the line chart
-// const labels = Object.keys(revenueByMonth[storeLocations[0]]);
-// const data = storeLocations.map((storeLocation, index) => {
-//   return {
-//     label: storeLocation,
-//     data: labels.map((month) => revenueByMonth[storeLocation][month] || 0),
-//     borderColor: [
-//       "rgb(237, 116, 112)",
-//       "rgb(130, 105, 90)",
-//       "rgb(189, 203, 137)",
-//     ][index],
-//     backgroundColor: [
-//       "rgb(237, 116, 112)",
-//       "rgb(130, 105, 90)",
-//       "rgb(189, 203, 137)",
-//     ], 
-//     tension: 0.1,
-//   };
-// });
-
-// // Create the line chart
-// const lineTrend = createChart(
-//   labels,
-//   data,
-//   "line",
-//   {
-//     indexAxis: "x",
-//     borderColor: [
-//       "rgb(237, 116, 112)",
-//       "rgb(130, 105, 90)",
-//       "rgb(189, 203, 137)",
-//     ],
-//   },
-//   "lineTrend"
-// );
 
 
-
-// //LineTrendHours
-// // Extract revenue data by hour for each store location
-// const storeLocations = [...new Set(datasets.map((dataset) => dataset.store_location))];
-// const revenueByHour = storeLocations.reduce((acc, storeLocation) => {
-//   acc[storeLocation] = {};
-//   datasets.forEach((dataset) => {
-//     if (dataset.store_location === storeLocation) {
-//       const hour = dataset.transaction_time.split(":")[0]; // Extract hour from transaction_time
-//       const revenue = Number(dataset.transaction_total);
-//       if (!acc[storeLocation][hour]) {
-//         acc[storeLocation][hour] = 0;
-//       }
-//       acc[storeLocation][hour] += revenue;
-//     }
-//   });
-//   return acc;
-// }, {});
-
-// // Create labels (hours) and data arrays for the line chart
-// const hours = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0')); // Generate hours from "00" to "23"
-// const data = storeLocations.map((storeLocation, index) => {
-//   return {
-//     label: storeLocation,
-//     data: hours.map((hour) => revenueByHour[storeLocation][hour] || 0),
-//     borderColor: [
-//       "rgb(237, 116, 112)",
-//       "rgb(130, 105, 90)",
-//       "rgb(189, 203, 137)",
-//       "rgb(255, 206, 86)",
-//       "rgb(75, 192, 192)"
-//     ][index % 5], // Use different colors for different store locations
-//     backgroundColor: [
-//       "rgba(237, 116, 112, 0.2)",
-//       "rgba(130, 105, 90, 0.2)",
-//       "rgba(189, 203, 137, 0.2)",
-//       "rgba(255, 206, 86, 0.2)",
-//       "rgba(75, 192, 192, 0.2)"
-//     ][index % 5], 
-//     tension: 0.1,
-//   };
-// });
-
-// // Create the line chart
-// const lineTrendHours = createChart(
-//   hours,
-//   data,
-//   "line",
-//   {
-//     indexAxis: "x",
-//   },
-//   "lineTrendHours"
-// );
 
 // Line chart: trend of revenue by month
 // Define a mapping of month numbers to month names
@@ -467,7 +241,6 @@ const lineTrend = createChart(
   "lineTrend"
 );
 
-
 // Line chart: trend of revenue by hour
 const revenueByHour = storeLocations.reduce((acc, storeLocation) => {
   acc[storeLocation] = {};
@@ -515,7 +288,6 @@ const lineTrendHours = createChart(
 );
 
 //DataTables
-// let table = new DataTable("#myTable");
 $(document).ready(function () {
   let table = $("#myTable").DataTable({
     // Add options for pagination, sorting, and searching here
