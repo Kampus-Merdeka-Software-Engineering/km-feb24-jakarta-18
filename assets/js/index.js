@@ -184,7 +184,32 @@ const barRevenueType = createChart(
 );
 
 // Dropdown filter for product categories
+let categories = new Set(datasets.map(dataset => dataset.product_category));
+categories = ["All", ...categories];
 
+// Populate the dropdown
+const categoryDropdown = document.getElementById('categoryDropdown');
+categories.forEach(category => {
+  const option = document.createElement('option');
+  option.value = category;
+  option.text = category;
+  categoryDropdown.appendChild(option);
+});
+
+
+// Dropdown filter for product categories
+let lokasitoko = new Set(datasets.map(dataset => dataset.store_location));
+lokasitoko = ["All", ...lokasitoko];
+
+// Populate the dropdown
+const storeDropdown = document.getElementById('storeDropdown');
+lokasitoko.forEach(storelocation => {
+  const option = document.createElement('option');
+  option.classList.add('lokasitoko');
+  option.value = storelocation;
+  option.text = storelocation;
+  storeDropdown.appendChild(option);
+});
 
 
 // Line chart: trend of revenue by month
@@ -288,45 +313,277 @@ const lineTrendHours = createChart(
 );
 
 //DataTables
-$(document).ready(function () {
-  let table = $("#myTable").DataTable({
-    // Add options for pagination, sorting, and searching here
-    responsive: true,
-    paging: true,
-    lengthChange: true,
-    searching: true,
-    ordering: true,
-    info: true,
-    data: datasets, // Assuming 'datasets' is your data source
-    columns: [
-      // Define columns and how to display data
-      { data: "product_category" },
-      { data: "product_type" },
-      { data: "transaction_total" }, // Access data for missing columns
-      { data: "transaction_qty" }, // Access data for missing columns
-      {
-        data: null, // Calculate and display average revenue
-        render: function (data, type, row) {
-          if (row.transaction_qty > 0) {
-            return `$${(row.transaction_total / row.transaction_qty).toFixed(
-              2
-            )}`;
-          } else {
-            return "$0.00";
-          }
-        },
+let table = $("#myTable").DataTable({
+  // Add options for pagination, sorting, and searching here
+  responsive: true,
+  paging: true,
+  lengthChange: true,
+  searching: true,
+  ordering: true,
+  info: true,
+  data: datasets, // Assuming 'datasets' is your data source
+  columns: [
+    // Define columns and how to display data
+    { data: "store_location" },
+    { data: "product_category" },
+    { data: "product_type" },
+    { data: "transaction_total" }, // Access data for missing columns
+    { data: "transaction_qty" }, // Access data for missing columns
+    {
+      data: null, // Calculate and display average revenue
+      render: function (data, type, row) {
+        if (row.transaction_qty > 0) {
+          return `$${(row.transaction_total / row.transaction_qty).toFixed(
+            2
+          )}`;
+        } else {
+          return "$0.00";
+        }
       },
-    ],
+    },
+  ],
+});
+// $(document).ready(function () {
+// });
+
+//OPTION LISTENER Store Location
+const optiontoko = document.querySelector('#storeDropdown');
+// const mmm #cat
+// console.log(optiontoko);
+// namaconst.ad{
+
+// }
+
+optiontoko.addEventListener('change', event=>{
+  const value = event.target.value;
+  let rows = datasets;
+
+  if (value!= "All") {
+    rows = datasets.filter(row=>row.store_location === value);
+    // rows = datasets.filter(row => row.product_category === value);
+    
+  }
+  // console.log(rows);
+let transactionTotal = rows.length;
+let totalRevenue = 0;
+let totalQTY = 0;
+let totalTransaction = 0;
+let categoryRevenue = {}; //bar chart revenue
+let datasetPie = []; //pie chart
+// const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+// const storeLocations = [];
+
+//chart
+for (let index = 0; index < rows.length; index++) {
+  //deklarasi dataset to rows
+  const dataset = rows[index];
+
+  totalRevenue += Number(dataset.transaction_total);
+  totalQTY += Number(dataset.transaction_qty);
+  totalTransaction += Number(dataset.transaction_total);
+
+  //Ini untuk bar revenue
+  const category = dataset.product_category;
+  if (categoryRevenue[category]) {
+    categoryRevenue[category] += Number(dataset.transaction_total);
+  } else {
+    categoryRevenue[category] = Number(dataset.transaction_total);
+  }
+
+  //Filter Piechart
+  if (datasetPie.map((row) => row.id).includes(dataset.store_id)) {
+    datasetPie = datasetPie.map((row) => {
+      if (row.id === dataset.store_id) {
+        return {
+          ...row,
+          value: row.value + Number(dataset.transaction_total),
+        };
+      }
+      return row;
+    });
+  } else {
+    datasetPie.push({
+      id: dataset.store_id,
+      nama: dataset.store_location,
+      value: Number(dataset.transaction_total),
+    });
+  }
+
+  //Filter Line Chart Months
+  // storeLocations.push(dataset.store_location);
+}
+
+//Score Card Filter
+document.querySelector(".totalSales").innerHTML = transactionTotal;
+document.querySelector(".totalRevenue").innerHTML =
+  "$" + totalRevenue.toFixed(2);
+document.querySelector(".AVGSalesQTY").innerHTML = AVGSalesQTY(
+  totalQTY,
+  transactionTotal
+).toFixed(2);
+
+document.querySelector(".AVGRevenue").innerHTML =
+  "$" + AVGRevenue(totalTransaction, transactionTotal).toFixed(2);
+///////////////////////////////////////////////////////////////////////
+//Pie Chart Filter manggil value
+  let backgroundColor = [
+        "rgb(237, 116, 112)",
+        "rgb(130, 105, 90)",
+        "rgb(189, 203, 137)",
+  ];
+
+  if (value == "Lower Manhattan") {
+      backgroundColor = ["rgb(237, 116, 112)"]  
+  }else if (value == "Astoria"){
+    backgroundColor = ["rgb(130, 105, 90)"]
+  }else if (value == "Hell's Kitchen"){
+    backgroundColor = ["rgb(189, 203, 137)"]
+  }
+
+  pieChart.data.labels= datasetPie.map(row=>row.nama);
+  pieChart.data.datasets = [
+    {
+      label: "My First Dataset",
+      data: PersentaseSales(datasetPie, totalTransaction),
+      backgroundColor: backgroundColor,
+    }
+  ]
+  pieChart.update();
+
+//Filter Bar Chart:Revenue Category
+// Sort the object by revenue in descending order and get the top 5 categories
+let sortedCategories = Object.entries(categoryRevenue)
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 5);
+
+// console.log(sortedCategories);
+
+barRevenue.data.labels = sortedCategories.map((category) => category[0]);
+barRevenue.data.datasets = [
+    {
+      label: "Revenue by Product Category",
+      data: sortedCategories.map((category) => category[1]),
+      backgroundColor: [
+        "rgb(237, 116, 112)",
+        "rgb(130, 105, 90)",
+        "rgb(189, 203, 137)",
+        "rgb(255, 206, 86)",
+        "rgb(75, 192, 192)",
+      ],
+    },
+  ]
+  barRevenue.update();
+  //////////////////////////////////////////
+
+  //Filter Line Chart Revenue Months
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+// Extract store locations from datasets
+const storeLocations = [...new Set(rows.map(dataset => dataset.store_location))];
+
+// Calculate revenue by month for each store location
+const revenueByMonth = storeLocations.reduce((acc, storeLocation) => {
+  acc[storeLocation] = {};
+  rows.forEach(dataset => {
+    if (dataset.store_location === storeLocation) {
+      const month = dataset.transaction_date.split("/")[0]; // Assuming MM/DD/YYYY format
+      const revenue = Number(dataset.transaction_total);
+      acc[storeLocation][month] = (acc[storeLocation][month] || 0) + revenue;
+    }
   });
+  return acc;
+}, {});
+
+// Sort the months and map them to month names
+const sortedMonthNumbers = Object.keys(revenueByMonth[storeLocations[0]]).sort((a, b) => a - b);
+const monthLabels = sortedMonthNumbers.map(monthNumber => monthNames[monthNumber - 1]);
+  let backgroundColorMonth = [
+    "rgb(237, 116, 112)",
+    "rgb(130, 105, 90)",
+    "rgb(189, 203, 137)",
+  ];
+
+  if (value == "Lower Manhattan") {
+    backgroundColor = ["rgb(237, 116, 112)"]
+  } else if (value == "Astoria") {
+    backgroundColor = ["rgb(130, 105, 90)"]
+  } else if (value == "Hell's Kitchen") {
+    backgroundColor = ["rgb(189, 203, 137)"]
+  }
+
+// Prepare the data for the line chart
+const lineDataByMonth = storeLocations.map((storeLocation, index) => {
+  return {
+    label: storeLocation,
+    data: sortedMonthNumbers.map(month => revenueByMonth[storeLocation][month] || 0),
+    borderColor:backgroundColor,
+    // backgroundColor: backgroundColorMonth,
+    tension: 0.1,
+  };
 });
 
-//SIDEBAR
-// const sidebar = document.getElementById("sidebar");
+lineTrend.data.labels = monthLabels;
+lineTrend.data.datasets = lineDataByMonth;
+lineTrend.update();
+//////////////////////////////////////////////////////
 
-// sidebar.addEventListener("mouseover", () => {
-//   sidebar.classList.add("sidebar-expanded");
+//Filter Tabel
+  table.clear();
+  table.rows.add(rows);
+  table.draw();
+
+}) 
+
+// Line chart: trend of revenue by month
+// Define a mapping of month numbers to month names
+// const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+// Extract store locations from datasets
+// const storeLocations = [...new Set(datasets.map(dataset => dataset.store_location))];
+
+// Calculate revenue by month for each store location
+// const revenueByMonth = storeLocations.reduce((acc, storeLocation) => {
+//   acc[storeLocation] = {};
+//   datasets.forEach(dataset => {
+//     if (dataset.store_location === storeLocation) {
+//       const month = dataset.transaction_date.split("/")[0]; // Assuming MM/DD/YYYY format
+//       const revenue = Number(dataset.transaction_total);
+//       acc[storeLocation][month] = (acc[storeLocation][month] || 0) + revenue;
+//     }
+//   });
+//   return acc;
+// }, {});
+
+// Sort the months and map them to month names
+// const sortedMonthNumbers = Object.keys(revenueByMonth[storeLocations[0]]).sort((a, b) => a - b);
+// const monthLabels = sortedMonthNumbers.map(monthNumber => monthNames[monthNumber - 1]);
+
+// Prepare the data for the line chart
+// const lineDataByMonth = storeLocations.map((storeLocation, index) => {
+//   return {
+//     label: storeLocation,
+//     data: sortedMonthNumbers.map(month => revenueByMonth[storeLocation][month] || 0),
+//     borderColor: [
+//       "rgb(237, 116, 112)",
+//       "rgb(130, 105, 90)",
+//       "rgb(189, 203, 137)",
+//     ][index % 3],
+//     backgroundColor: [
+//       "rgba(237, 116, 112, 0.2)",
+//       "rgba(130, 105, 90, 0.2)",
+//       "rgba(189, 203, 137, 0.2)",
+//     ][index % 3],
+//     tension: 0.1,
+//   };
 // });
 
-// sidebar.addEventListener("mouseout", () => {
-//   sidebar.classList.remove("sidebar-expanded");
-// });
+// Create the line chart
+// const lineTrend = createChart(
+//   monthLabels,
+//   lineDataByMonth,
+//   "line",
+//   {
+//     indexAxis: "x",
+//   },
+//   "lineTrend"
+// );

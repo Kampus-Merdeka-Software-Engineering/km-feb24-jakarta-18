@@ -150,34 +150,39 @@ body {
 }
 .header_title {
     color: rgb(50, 44, 43);
+    font-weight:500;
+    /* align-items:end; */
+    /* gap: 5px; */
+    /* padding: 4px 12px; */
+    margin-left: -550px;
+}
+
+/* .header_title span{
+    margin-left: 15px;
+}  */
+
+.mitra {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.km-logo{
+    border-radius: 0;
 }
 .user {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
-.search_box {
-    background-color: #f7f7f7;
-    border-radius: 15px;
+.hello-admin {
     color: rgb(50, 44, 43);
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 4px 12px;
 }
-.search_box input {
-    background: transparent;
-    padding: 10px;
-}
-.search_box i {
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: all 0.5s ease-out;
-}
-.search_box i:hover {
-    transform: scale(1.1);
-}
-.filter-container {
+/* .filter-container {
     padding: 2rem;
     border-radius: 10px;
     background-color: rgb(255, 252, 246);
@@ -195,6 +200,18 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+} */
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    background: rgb(186, 135, 89);
+    border-radius: 10px;
+    box-shadow: 10px gray;
+    padding: 10px 2rem;
+    margin-bottom: 1rem;
 }
 .scorecard_container {
     background-color: rgb(255, 252, 246);
@@ -206,7 +223,7 @@ body {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 2rem;
+    gap: 3rem;
 }
 .scorecard_title {
     color: rgb(50, 44, 43);
@@ -217,7 +234,7 @@ body {
     background-color: rgb(230, 219, 202);
     border-radius: 10px;
     padding: 1.2rem;
-    width: 250px;
+    width: 290px;
     height: 110px;
     display: flex;
     flex-direction: column;
@@ -238,7 +255,7 @@ body {
     flex-direction: column;
 }
 .title {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
 }
 .amount_value {
@@ -348,10 +365,11 @@ body {
 }
 
 @media (max-width: 768px) {
-    .header {
+    .header, .header_title {
         flex-direction: column;
         align-items: flex-start;
     }
+    
     .scorecard, .chart_content, .chart_content1 {
         width: 100%;
         max-width: 100%;
