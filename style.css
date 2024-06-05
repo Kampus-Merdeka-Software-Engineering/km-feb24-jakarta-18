@@ -22,7 +22,7 @@ body {
     left: 0;
     bottom: 0;
     width: 110px;
-    height: 100vh;
+    /* height: 100vh; */
     padding: 1.7rem 0;
     background: rgb(186, 135, 89);
     overflow: hidden;
@@ -379,7 +379,7 @@ body {
     }
     .sidebar {
         max-width: 100px;
-        height: 100vh;
+        /* height: 100vh; */
         position: fixed;
         bottom: 0;
         left: 0;
@@ -388,12 +388,12 @@ body {
         margin-right: 30px;
     }
     .sidebar:hover {
-        height: 100vh;
+        /* height: 100vh; */
         max-width: 300px;
         transition: height 0.5s linear;
     }
     .sidebar:hover ~ .main {
-        height: 100vh;
+        /* height: 100vh; */
         margin-left: 300px;
         width: calc(100% - 250px);
     } 
@@ -439,12 +439,12 @@ body {
         transition: height 0.5s linear;
     }
     .sidebar:hover {
-        height: 100vh;
+        /* height: 100vh; */
         max-width:250px;
         transition: height 0.5s linear;
     }
     .sidebar:hover ~ .main {
-        height: 100vh;
+        /* height: 100vh; */
         margin-left: 250px;
         width: calc(100% - 250px);
     } 
