@@ -2,55 +2,68 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Coffe Shop Sales 18</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css"/>
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/responsive.dataTables.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.0.7/css/responsive.dataTables.min.css"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
     <div class="sidebar" id="sidebar">
       <div class="logo">
         <div class="logo-content">
-            <img src="assets/img/coffeeshop2.png" class="logo1"/>
-            <span>CoffeeShop18</span>
-        </div>  
+          <img src="assets/img/coffeeshop2.png" class="logo1" />
+          <span>CoffeeShop18</span>
+        </div>
       </div>
-        <ul class="menu">
-            <li class="active">
-                <a href="dashboard.html" >
-                    <i class="fas fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="report.html">
-                    <i class="fas fa-file-alt"></i>
-                    <span>Report</span>
-                </a>
-            </li>
-            <li>
-                <a href="about-us.html">
-                    <i class="fas fa-mug-hot"></i>
-                    <span>About Us</span>
-                </a>
-            </li> 
-            <li class="logout">
-                <a href="/login.html">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
-                </a>
-            </li>
-        </ul>
+      <ul class="menu">
+        <li class="active">
+          <a href="dashboard.html">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="report.html">
+            <i class="fas fa-file-alt"></i>
+            <span>Report</span>
+          </a>
+        </li>
+        <li>
+          <a href="about-us.html">
+            <i class="fas fa-mug-hot"></i>
+            <span>About Us</span>
+          </a>
+        </li>
+        <li class="logout">
+          <a href="/login.html">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
     </div>
 
     <div class="main">
       <div class="header">
         <div class="mitra">
-          <img src="assets/img/km-logo.png" alt="km-logo" class="km-logo"/>
-          <img src="assets/img/revou-logo.png" alt="revou-logo" class="revou-logo" />
+          <img src="assets/img/km-logo.png" alt="km-logo" class="km-logo" />
+          <img
+            src="assets/img/revou-logo.png"
+            alt="revou-logo"
+            class="revou-logo"
+          />
         </div>
         <div class="header_title">
           <span>KM JAKARTA TEAM 18</span>
@@ -134,11 +147,11 @@
       <div class="chart_container">
         <div class="chart_content1">
           <div class="filter-dropdown">
-        <label for="storeDropdown">Filter by Store:</label>
-        <select id="storeDropdown">
-            <option value="All" class="lokasitoko">Select All</option>
-        </select>
-    </div>
+            <label for="storeDropdown">Filter by Store:</label>
+            <select id="storeDropdown">
+              <option value="All" class="lokasitoko">Select All</option>
+            </select>
+          </div>
           <h3 class="main_title">Trend of Revenue by Months</h3>
           <canvas class="lineTrend" id="lineTrend"></canvas>
         </div>
@@ -149,55 +162,64 @@
       </div>
       <!-- containerbawah -->
       <div class="chart_container">
-        <div class="chart_content_table" style="overflow: hidden;">
+        <div class="chart_content_table" style="overflow: hidden">
           <h3 class="main_title_table">Transaction Data</h3>
-          <table id="myTable" class="display">  
+          <table id="myTable" class="display">
             <thead>
               <tr>
                 <th>Store Location</th>
                 <th>Product Category</th>
                 <th>Product Type</th>
-                <th>Total Sales ($)</th>  
-                <th>Transaction QTY</th>  
-                <th>Average Revenue ($)</th>  
+                <th>Total Sales ($)</th>
+                <th>Transaction QTY</th>
+                <th>Average Revenue ($)</th>
               </tr>
             </thead>
-            <tbody id="data-output">
-
-            </tbody>
+            <tbody id="data-output"></tbody>
           </table>
         </div>
       </div>
       <!-- Footer -->
       <footer>
         <div class="footerContainer">
-            <div class="row">
-                <div class="col" id="company">
-                    <img class="logo" src="assets/img/km-logo.png" alt="logo kampus merdeka">
-                    <img class="logo" src="assets/img/revou-logo.png" alt="logo revou">
-                    <p>Content in this dataset is provide by kaggle.com</p>
-                </div>
-
-                <div class="col" id="useful-links">
-                    <h3>Links</h3>
-                    <div class="links">
-                        <a href="index.html">Dashboard</a>
-                        <a href="#">Analytics</a>
-                        <a href="dataset.html">About Dataset</a>
-                        <a href="us.html">About Us</a>
-                    </div>
-                </div>
-
-                <div class="col" id="contact">
-                    <h3>Contact</h3>
-                    <div class="contact-details">
-                        <img class="logoContact" src="assets/icon/mail-putih.svg">
-                        <a target="_blank" href="mailto:medan.team3.tarevou@gmail.com?subject=Inquiry&body=Hello%20Team%203,">Team 3</a>
-                    </div>
-                </div>
+          <div class="row">
+            <div class="col" id="company">
+              <img
+                class="logo"
+                src="assets/img/km-logo.png"
+                alt="logo kampus merdeka"
+              />
+              <img
+                class="logo"
+                src="assets/img/revou-logo.png"
+                alt="logo revou"
+              />
+              <p>Content in this dataset is provide by kaggle.com</p>
             </div>
+
+            <div class="col" id="useful-links">
+              <h3>Links</h3>
+              <div class="links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="#">Analytics</a>
+                <a href="about-us.html">About Us</a>
+              </div>
+            </div>
+
+            <div class="col" id="contact">
+              <h3>Contact</h3>
+              <div class="contact-details">
+                <img class="logoContact" src="assets/icon/mail-putih.svg" />
+                <a
+                  target="_blank"
+                  href="mailto:medan.team3.tarevou@gmail.com?subject=Inquiry&body=Hello%20Team%203,"
+                  >Team 18</a
+                >
+              </div>
+            </div>
+          </div>
         </div>
-    </footer>
+      </footer>
     </div>
 
     <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script> -->
