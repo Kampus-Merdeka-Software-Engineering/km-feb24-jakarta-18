@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Coffe Shop Sales 18</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -29,15 +29,9 @@
       </div>
       <ul class="menu">
         <li class="active">
-          <a href="dashboard.html">
+          <a href="index.html">
             <i class="fas fa-tachometer-alt"></i>
             <span>Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a href="report.html">
-            <i class="fas fa-file-alt"></i>
-            <span>Report</span>
           </a>
         </li>
         <li>
@@ -47,7 +41,7 @@
           </a>
         </li>
         <li class="logout">
-          <a href="/login.html">
+          <a href="login.html">
             <i class="fas fa-sign-out-alt"></i>
             <span>Logout</span>
           </a>
@@ -57,14 +51,6 @@
 
     <div class="main">
       <div class="header">
-        <div class="mitra">
-          <img src="assets/img/km-logo.png" alt="km-logo" class="km-logo" />
-          <img
-            src="assets/img/revou-logo.png"
-            alt="revou-logo"
-            class="revou-logo"
-          />
-        </div>
         <div class="header_title">
           <span>KM JAKARTA TEAM 18</span>
           <h2>Coffe Shop Sales 18 Dashboard</h2>
@@ -75,6 +61,22 @@
           </div>
           <img src="assets/img/user.png" alt="" />
         </div>
+      </div>
+
+      <div class="filter-container">
+        <div class="filter-dropdown">
+            <label for="storeDropdown">Filter by Store:</label>
+            <select id="storeDropdown">
+              <option value="All" class="lokasitoko">Select All</option>
+            </select>
+          </div>
+          <div class="filter-dropdown">
+            <label for="categoryDropdown">Filter by Category:</label>
+            <select id="categoryDropdown">
+              <option value="All">Select All</option>
+            </select>
+          </div>
+
       </div>
 
       <!-- scorecard-content -->
@@ -133,12 +135,6 @@
           <canvas class="barRevenue" id="barRevenue"></canvas>
         </div>
         <div class="chart_content">
-          <div class="filter-dropdown">
-            <label for="categoryDropdown">Filter by Category:</label>
-            <select id="categoryDropdown">
-              <option value="All">Select All</option>
-            </select>
-          </div>
           <h3 class="main_title">Revenue by Product Type</h3>
           <canvas class="barRevenue" id="barRevenueType"></canvas>
         </div>
@@ -146,12 +142,6 @@
       <!-- chart-content-tengah -->
       <div class="chart_container">
         <div class="chart_content1">
-          <div class="filter-dropdown">
-            <label for="storeDropdown">Filter by Store:</label>
-            <select id="storeDropdown">
-              <option value="All" class="lokasitoko">Select All</option>
-            </select>
-          </div>
           <h3 class="main_title">Trend of Revenue by Months</h3>
           <canvas class="lineTrend" id="lineTrend"></canvas>
         </div>
@@ -181,9 +171,9 @@
       </div>
       <!-- Footer -->
       <footer>
-        <div class="footerContainer">
-          <div class="row">
-            <div class="col" id="company">
+        <div class="footer_container">
+          <div class="footer_content">
+            <div class="company" id="company">
               <img
                 class="logo"
                 src="assets/img/km-logo.png"
@@ -196,24 +186,25 @@
               />
               <p>Content in this dataset is provide by kaggle.com</p>
             </div>
-
-            <div class="col" id="useful-links">
+            <div class="footer_link" id="footer_link">
               <h3>Links</h3>
               <div class="links">
-                <a href="dashboard.html">Dashboard</a>
-                <a href="#">Analytics</a>
+                <a href="index.html">Dashboard</a>
                 <a href="about-us.html">About Us</a>
               </div>
             </div>
-
             <div class="col" id="contact">
               <h3>Contact</h3>
               <div class="contact-details">
-                <img class="logoContact" src="assets/icon/mail-putih.svg" />
+                <img
+                class="logo"
+                src="assets/img/github.png"
+                alt="logo github"
+                />
                 <a
                   target="_blank"
-                  href="mailto:medan.team3.tarevou@gmail.com?subject=Inquiry&body=Hello%20Team%203,"
-                  >Team 18</a
+                  href="https://github.com/Kampus-Merdeka-Software-Engineering/km-feb24-jakarta-18/"
+                  >KM Jakarta Team 18</a
                 >
               </div>
             </div>
@@ -222,7 +213,6 @@
       </footer>
     </div>
 
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.7.1.js"

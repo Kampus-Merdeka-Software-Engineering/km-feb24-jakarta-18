@@ -34,7 +34,6 @@ for (let index = 0; index < datasets.length; index++) {
     });
   }
 }
-console.log(datasetPie);
 
 function AVGSalesQTY(totalQTY, totalTrans) {
   return totalQTY / totalTrans;
@@ -77,18 +76,18 @@ function createChart(
   return new Chart(ctx, config);
 }
 
-function PersentaseSales(datasetPie, totalTransaction){
-  let presentasePie =[];
+function PersentaseSales(datasetPie, totalTransaction) {
+  let presentasePie = [];
   for (let index = 0; index < datasetPie.length; index++) {
     const item = datasetPie[index];
-    presentasePie.push(Math.round((item.value/totalTransaction)*100))
+    presentasePie.push(Math.round((item.value / totalTransaction) * 100))
   }
   return presentasePie;
 
 }
-  // Pie-Doughnut-chart
+// Pie-Doughnut-chart
 const pieChart = createChart(
-datasetPie.map(row=>row.nama),
+  datasetPie.map(row => row.nama),
   [
     {
       label: "Persentase Sales",
@@ -343,268 +342,19 @@ let table = $("#myTable").DataTable({
     },
   ],
 });
-// $(document).ready(function () {
-// });
+
 
 //OPTION LISTENER Store Location
-const optiontoko = document.querySelector('#storeDropdown'); 
+const optiontoko = document.querySelector('#storeDropdown');
 const optionkategori = document.querySelector('#categoryDropdown');
-// console.log(optiontoko);
-// namaconst.ad{
-
-// }
 
 //Add Event Listener Filter OptionToko
-optiontoko.addEventListener('change', event=>{
-  const value = event.target.value;
-  let rows = datasets;
-
-  if (value!= "All") {
-    rows = datasets.filter(row=>row.store_location === value);
-    // rows = datasets.filter(row => row.product_category === value);
-    
-  }
-  // console.log(rows);
-let transactionTotal = rows.length;
-let totalRevenue = 0;
-let totalQTY = 0;
-let totalTransaction = 0;
-let categoryRevenue = {}; //bar chart revenue
-let typeRevenue = {}; //bar chart type
-let datasetPie = []; //pie chart
-
-//Perulangan Chart
-for (let index = 0; index < rows.length; index++) {
-  //deklarasi dataset to rows
-  const dataset = rows[index];
-
-  totalRevenue += Number(dataset.transaction_total);
-  totalQTY += Number(dataset.transaction_qty);
-  totalTransaction += Number(dataset.transaction_total);
-
-  //Ini untuk bar revenue category
-  const category = dataset.product_category;
-  if (categoryRevenue[category]) {
-    categoryRevenue[category] += Number(dataset.transaction_total);
-  } else {
-    categoryRevenue[category] = Number(dataset.transaction_total);
-  }
-
-  // Ini untuk bar revenue type
-  const type = dataset.product_type;
-  if (typeRevenue[type]) {
-    typeRevenue[type] += Number(dataset.transaction_total);
-  } else {
-    typeRevenue[type] = Number(dataset.transaction_total);
-  }
-
-  //Filter Piechart
-  if (datasetPie.map((row) => row.id).includes(dataset.store_id)) {
-    datasetPie = datasetPie.map((row) => {
-      if (row.id === dataset.store_id) {
-        return {
-          ...row,
-          value: row.value + Number(dataset.transaction_total),
-        };
-      }
-      return row;
-    });
-  } else {
-    datasetPie.push({
-      id: dataset.store_id,
-      nama: dataset.store_location,
-      value: Number(dataset.transaction_total),
-    });
-  }
-
-  //Filter Line Chart Months
-  // storeLocations.push(dataset.store_location);
-
-}
-
-//Score Card Filter
-document.querySelector(".totalSales").innerHTML = transactionTotal;
-document.querySelector(".totalRevenue").innerHTML =
-  "$" + totalRevenue.toFixed(2);
-document.querySelector(".AVGSalesQTY").innerHTML = AVGSalesQTY(
-  totalQTY,
-  transactionTotal
-).toFixed(2);
-
-document.querySelector(".AVGRevenue").innerHTML =
-  "$" + AVGRevenue(totalTransaction, transactionTotal).toFixed(2);
-///////////////////////////////////////////////////////////////////////
-//Pie Chart Filter manggil value
-  let backgroundColor = [
-        "rgb(237, 116, 112)",
-        "rgb(130, 105, 90)",
-        "rgb(189, 203, 137)",
-  ];
-
-  if (value == "Lower Manhattan") {
-      backgroundColor = ["rgb(237, 116, 112)"]  
-  }else if (value == "Astoria"){
-    backgroundColor = ["rgb(130, 105, 90)"]
-  }else if (value == "Hell's Kitchen"){
-    backgroundColor = ["rgb(189, 203, 137)"]
-  }
-
-  pieChart.data.labels= datasetPie.map(row=>row.nama);
-  pieChart.data.datasets = [
-    {
-      label: "Persentase Sales",
-      data: PersentaseSales(datasetPie, totalTransaction),
-      backgroundColor: backgroundColor,
-    }
-  ]
-  pieChart.update();
-
-//Filter Bar Chart:Revenue Category
-// Sort the object by revenue in descending order and get the top 5 categories
-let sortedCategories = Object.entries(categoryRevenue)
-  .sort((a, b) => b[1] - a[1])
-  .slice(0, 5);
-
-  barRevenue.data.labels = sortedCategories.map((category) => category[0]);
-  barRevenue.data.datasets = [
-      {
-        label: "Revenue by Product Category",
-        data: sortedCategories.map((category) => category[1]),
-        backgroundColor: [
-          "rgb(237, 116, 112)",
-          "rgb(130, 105, 90)",
-          "rgb(189, 203, 137)",
-          "rgb(255, 206, 86)",
-          "rgb(75, 192, 192)",
-        ],
-      },
-    ]
-    barRevenue.update();
-
-  ////////////////////////////////////////////
-//Filter Bar Chart: Revenue Type
-
-  // Bar chart: Revenue Contribution by Product Type
-  let sortedTypes = Object.entries(typeRevenue)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 5);
-
-  barRevenueType.data.labels = sortedTypes.map((type) => type[0]);
-  barRevenueType.data.datasets = [
-    {
-      label: "Revenue by Product Type",
-      data: sortedTypes.map((type) => type[1]),
-      backgroundColor: [
-        "rgb(237, 116, 112)",
-        "rgb(130, 105, 90)",
-        "rgb(189, 203, 137)",
-        "rgb(255, 206, 86)",
-        "rgb(75, 192, 192)",
-      ],
-    },
-  ]
-  barRevenueType.update(); 
-  //////////////////////////////////////////////
-
-  //Filter Line Chart Revenue Months
-  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-// Extract store locations from datasets
-const storeLocations = [...new Set(rows.map(dataset => dataset.store_location))];
-
-// Calculate revenue by month for each store location
-const revenueByMonth = storeLocations.reduce((acc, storeLocation) => {
-  acc[storeLocation] = {};
-  rows.forEach(dataset => {
-    if (dataset.store_location === storeLocation) {
-      const month = dataset.transaction_date.split("/")[0]; // Assuming MM/DD/YYYY format
-      const revenue = Number(dataset.transaction_total);
-      acc[storeLocation][month] = (acc[storeLocation][month] || 0) + revenue;
-    }
-  });
-  return acc;
-}, {});
-
-// Sort the months and map them to month names
-const sortedMonthNumbers = Object.keys(revenueByMonth[storeLocations[0]]).sort((a, b) => a - b);
-const monthLabels = sortedMonthNumbers.map(monthNumber => monthNames[monthNumber - 1]);
-  let backgroundColorMonth = [
-    "rgb(237, 116, 112)",
-    "rgb(130, 105, 90)",
-    "rgb(189, 203, 137)",
-  ];
-
-  if (value == "Lower Manhattan") {
-    backgroundColor = ["rgb(237, 116, 112)"]
-  } else if (value == "Astoria") {
-    backgroundColor = ["rgb(130, 105, 90)"]
-  } else if (value == "Hell's Kitchen") {
-    backgroundColor = ["rgb(189, 203, 137)"]
-  }
-
-// Prepare the data for the line chart
-const lineDataByMonth = storeLocations.map((storeLocation, index) => {
-  return {
-    label: storeLocation,
-    data: sortedMonthNumbers.map(month => revenueByMonth[storeLocation][month] || 0),
-    borderColor:backgroundColor,
-    tension: 0.1,
-  };
-});
-
-lineTrend.data.labels = monthLabels;
-lineTrend.data.datasets = lineDataByMonth;
-lineTrend.update();
-//////////////////////////////////////////////////////
-//Filter Line Chart Revenue Hours
-
-  // Line chart: trend of revenue by hour
-  const revenueByHour = storeLocations.reduce((acc, storeLocation) => {
-    acc[storeLocation] = {};
-    datasets.forEach(dataset => {
-      if (dataset.store_location === storeLocation) {
-        const hour = dataset.transaction_time.split(":")[0]; // Extract hour from transaction_time
-        const revenue = Number(dataset.transaction_total);
-        acc[storeLocation][hour] = (acc[storeLocation][hour] || 0) + revenue;
-      }
-    });
-    return acc;
-  }, {});
-
-  const hourLabels = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0')); // Generate hours from "00" to "23"
-  const lineDataByHour = storeLocations.map((storeLocation, index) => {
-    return {
-      label: storeLocation,
-      data: hourLabels.map(hour => revenueByHour[storeLocation][hour] || 0),
-      borderColor: backgroundColor
-      [index % 5], // Use different colors for different store locations
-      backgroundColor: backgroundColor [index % 5],
-      tension: 0.1,
-    };
-  });
-
-  lineTrendHours.data.labels = hourLabels;
-  lineTrendHours.data.datasets = lineDataByHour;
-  lineTrendHours.update();
-
-//////////////////////////////////////////////////////
-//Filter Tabel
-  table.clear();
-  table.rows.add(rows);
-  table.draw();
-
-}); 
-
-//////////////////////////////////////////////////////////
-//Add Event Listener Filter optionkategori
-optionkategori.addEventListener('change', event => {
+optiontoko.addEventListener('change', event => {
   const value = event.target.value;
   let rows = datasets;
 
   if (value != "All") {
-    rows = datasets.filter(row => row.product_category === value);
-    // rows = datasets.filter(row => row.product_category === value);
-
+    rows = datasets.filter(row => row.store_location === value);
   }
   let transactionTotal = rows.length;
   let totalRevenue = 0;
@@ -616,14 +366,15 @@ optionkategori.addEventListener('change', event => {
 
   //Perulangan Chart
   for (let index = 0; index < rows.length; index++) {
-    //deklarasi dataset to rows
+
+    //Deklarasi dataset to rows
     const dataset = rows[index];
 
     totalRevenue += Number(dataset.transaction_total);
     totalQTY += Number(dataset.transaction_qty);
     totalTransaction += Number(dataset.transaction_total);
 
-    //Ini untuk bar revenue category
+    //Perhitungan untuk bar revenue category
     const category = dataset.product_category;
     if (categoryRevenue[category]) {
       categoryRevenue[category] += Number(dataset.transaction_total);
@@ -631,7 +382,7 @@ optionkategori.addEventListener('change', event => {
       categoryRevenue[category] = Number(dataset.transaction_total);
     }
 
-    // Ini untuk bar revenue type
+    // Perhitungan untuk bar revenue type
     const type = dataset.product_type;
     if (typeRevenue[type]) {
       typeRevenue[type] += Number(dataset.transaction_total);
@@ -642,7 +393,7 @@ optionkategori.addEventListener('change', event => {
     //Filter Piechart
     if (datasetPie.map((row) => row.id).includes(dataset.store_id)) {
       datasetPie = datasetPie.map((row) => {
-        if (row.id === dataset.product_category) {
+        if (row.id === dataset.store_id) {
           return {
             ...row,
             value: row.value + Number(dataset.transaction_total),
@@ -670,8 +421,9 @@ optionkategori.addEventListener('change', event => {
 
   document.querySelector(".AVGRevenue").innerHTML =
     "$" + AVGRevenue(totalTransaction, transactionTotal).toFixed(2);
-  ///////////////////////////////////////////////////////////////////////
-  //Pie Chart Filter manggil value
+
+
+  //Pie Chart Filter value
   let backgroundColor = [
     "rgb(237, 116, 112)",
     "rgb(130, 105, 90)",
@@ -718,9 +470,7 @@ optionkategori.addEventListener('change', event => {
   ]
   barRevenue.update();
 
-  ////////////////////////////////////////////
   //Filter Bar Chart: Revenue Type
-
   // Bar chart: Revenue Contribution by Product Type
   let sortedTypes = Object.entries(typeRevenue)
     .sort((a, b) => b[1] - a[1])
@@ -741,7 +491,236 @@ optionkategori.addEventListener('change', event => {
     },
   ]
   barRevenueType.update();
-  //////////////////////////////////////////////
+  //Filter Line Chart Revenue Months
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+  // Extract store locations from datasets
+  const storeLocations = [...new Set(rows.map(dataset => dataset.store_location))];
+
+  // Calculate revenue by month for each store location
+  const revenueByMonth = storeLocations.reduce((acc, storeLocation) => {
+    acc[storeLocation] = {};
+    rows.forEach(dataset => {
+      if (dataset.store_location === storeLocation) {
+        const month = dataset.transaction_date.split("/")[0]; // Assuming MM/DD/YYYY format
+        const revenue = Number(dataset.transaction_total);
+        acc[storeLocation][month] = (acc[storeLocation][month] || 0) + revenue;
+      }
+    });
+    return acc;
+  }, {});
+
+  // Sort the months and map them to month names
+  const sortedMonthNumbers = Object.keys(revenueByMonth[storeLocations[0]]).sort((a, b) => a - b);
+  const monthLabels = sortedMonthNumbers.map(monthNumber => monthNames[monthNumber - 1]);
+  let backgroundColorMonth = [
+    "rgb(237, 116, 112)",
+    "rgb(130, 105, 90)",
+    "rgb(189, 203, 137)",
+  ];
+
+  if (value == "Lower Manhattan") {
+    backgroundColor = ["rgb(237, 116, 112)"]
+  } else if (value == "Astoria") {
+    backgroundColor = ["rgb(130, 105, 90)"]
+  } else if (value == "Hell's Kitchen") {
+    backgroundColor = ["rgb(189, 203, 137)"]
+  }
+
+  // Prepare the data for the line chart
+  const lineDataByMonth = storeLocations.map((storeLocation, index) => {
+    return {
+      label: storeLocation,
+      data: sortedMonthNumbers.map(month => revenueByMonth[storeLocation][month] || 0),
+      borderColor: backgroundColor,
+      tension: 0.1,
+    };
+  });
+
+  lineTrend.data.labels = monthLabels;
+  lineTrend.data.datasets = lineDataByMonth;
+  lineTrend.update();
+
+  //Filter Line Chart Revenue Hours
+  // Line chart: trend of revenue by hour
+  const revenueByHour = storeLocations.reduce((acc, storeLocation) => {
+    acc[storeLocation] = {};
+    datasets.forEach(dataset => {
+      if (dataset.store_location === storeLocation) {
+        const hour = dataset.transaction_time.split(":")[0]; // Extract hour from transaction_time
+        const revenue = Number(dataset.transaction_total);
+        acc[storeLocation][hour] = (acc[storeLocation][hour] || 0) + revenue;
+      }
+    });
+    return acc;
+  }, {});
+
+  const hourLabels = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, '0')); // Generate hours from "00" to "23"
+  const lineDataByHour = storeLocations.map((storeLocation, index) => {
+    return {
+      label: storeLocation,
+      data: hourLabels.map(hour => revenueByHour[storeLocation][hour] || 0),
+      borderColor: backgroundColor
+      [index % 5], // Use different colors for different store locations
+      backgroundColor: backgroundColor[index % 5],
+      tension: 0.1,
+    };
+  });
+
+  lineTrendHours.data.labels = hourLabels;
+  lineTrendHours.data.datasets = lineDataByHour;
+  lineTrendHours.update();
+
+  //Filter Tabel
+  table.clear();
+  table.rows.add(rows);
+  table.draw();
+
+});
+
+//////////////////////////////////////////////////////////
+//Add Event Listener Filter optionkategori
+optionkategori.addEventListener('change', event => {
+  const value = event.target.value;
+  let rows = datasets;
+
+  if (value != "All") {
+    rows = datasets.filter(row => row.product_category === value);
+  }
+
+  let transactionTotal = rows.length;
+  let totalRevenue = 0;
+  let totalQTY = 0;
+  let totalTransaction = 0;
+  let categoryRevenue = {}; //bar chart revenue
+  let typeRevenue = {}; //bar chart type
+  let datasetPie = []; //pie chart
+
+  //Perulangan Chart
+  for (let index = 0; index < rows.length; index++) {
+    //deklarasi dataset to rows
+    const dataset = rows[index];
+
+    totalRevenue += Number(dataset.transaction_total);
+    totalQTY += Number(dataset.transaction_qty);
+    totalTransaction += Number(dataset.transaction_total);
+
+    //Perhitungan untuk bar revenue category
+    const category = dataset.product_category;
+    if (categoryRevenue[category]) {
+      categoryRevenue[category] += Number(dataset.transaction_total);
+    } else {
+      categoryRevenue[category] = Number(dataset.transaction_total);
+    }
+
+    //Perhitungan untuk bar revenue type
+    const type = dataset.product_type;
+    if (typeRevenue[type]) {
+      typeRevenue[type] += Number(dataset.transaction_total);
+    } else {
+      typeRevenue[type] = Number(dataset.transaction_total);
+    }
+
+    //Filter Piechart
+    if (datasetPie.map((row) => row.id).includes(dataset.store_id)) {
+      datasetPie = datasetPie.map((row) => {
+        if (row.id === dataset.product_category) {
+          return {
+            ...row,
+            value: row.value + Number(dataset.transaction_total),
+          };
+        }
+        return row;
+      });
+    } else {
+      datasetPie.push({
+        id: dataset.store_id,
+        nama: dataset.store_location,
+        value: Number(dataset.transaction_total),
+      });
+    }
+  }
+
+  //Score Card Filter
+  document.querySelector(".totalSales").innerHTML = transactionTotal;
+  document.querySelector(".totalRevenue").innerHTML =
+    "$" + totalRevenue.toFixed(2);
+  document.querySelector(".AVGSalesQTY").innerHTML = AVGSalesQTY(
+    totalQTY,
+    transactionTotal
+  ).toFixed(2);
+
+  document.querySelector(".AVGRevenue").innerHTML =
+    "$" + AVGRevenue(totalTransaction, transactionTotal).toFixed(2);
+
+  //Pie Chart Filter memanggil value
+  let backgroundColor = [
+    "rgb(237, 116, 112)",
+    "rgb(130, 105, 90)",
+    "rgb(189, 203, 137)",
+  ];
+
+  if (value == "Lower Manhattan") {
+    backgroundColor = ["rgb(237, 116, 112)"]
+  } else if (value == "Astoria") {
+    backgroundColor = ["rgb(130, 105, 90)"]
+  } else if (value == "Hell's Kitchen") {
+    backgroundColor = ["rgb(189, 203, 137)"]
+  }
+
+  pieChart.data.labels = datasetPie.map(row => row.nama);
+  pieChart.data.datasets = [
+    {
+      label: "Persentase Sales",
+      data: PersentaseSales(datasetPie, totalTransaction),
+      backgroundColor: backgroundColor,
+    }
+  ]
+  pieChart.update();
+
+  //Filter Bar Chart:Revenue Category
+  // Sort the object by revenue in descending order and get the top 5 categories
+  let sortedCategories = Object.entries(categoryRevenue)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+
+  barRevenue.data.labels = sortedCategories.map((category) => category[0]);
+  barRevenue.data.datasets = [
+    {
+      label: "Revenue by Product Category",
+      data: sortedCategories.map((category) => category[1]),
+      backgroundColor: [
+        "rgb(237, 116, 112)",
+        "rgb(130, 105, 90)",
+        "rgb(189, 203, 137)",
+        "rgb(255, 206, 86)",
+        "rgb(75, 192, 192)",
+      ],
+    },
+  ]
+  barRevenue.update();
+
+  //Filter Bar Chart: Revenue Type
+  // Bar chart: Revenue Contribution by Product Type
+  let sortedTypes = Object.entries(typeRevenue)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+
+  barRevenueType.data.labels = sortedTypes.map((type) => type[0]);
+  barRevenueType.data.datasets = [
+    {
+      label: "Revenue by Product Type",
+      data: sortedTypes.map((type) => type[1]),
+      backgroundColor: [
+        "rgb(237, 116, 112)",
+        "rgb(130, 105, 90)",
+        "rgb(189, 203, 137)",
+        "rgb(255, 206, 86)",
+        "rgb(75, 192, 192)",
+      ],
+    },
+  ]
+  barRevenueType.update();
 
   //Filter Line Chart Revenue Months
   const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -792,9 +771,8 @@ optionkategori.addEventListener('change', event => {
   lineTrend.data.labels = monthLabels;
   lineTrend.data.datasets = lineDataByMonth;
   lineTrend.update();
-  //////////////////////////////////////////////////////
-  //Filter Line Chart Revenue Hours
 
+  //Filter Line Chart Revenue Hours
   // Line chart: trend of revenue by hour
   const revenueByHour = storeLocations.reduce((acc, storeLocation) => {
     acc[storeLocation] = {};
@@ -824,7 +802,6 @@ optionkategori.addEventListener('change', event => {
   lineTrendHours.data.datasets = lineDataByHour;
   lineTrendHours.update();
 
-  //////////////////////////////////////////////////////
   //Filter Tabel
   table.clear();
   table.rows.add(rows);

@@ -85,7 +85,6 @@ body{
     margin-bottom: 30px;
 }
 
-
 input{
     padding: 0.5px;
     width: 100%;
@@ -102,16 +101,6 @@ input{
 .input-email{
     margin-bottom: 10px;
 }
-
-/* .hr {
-    display: block;
-    margin-bottom: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    border-width: 1px;
-    color: var(--Line);
-    background-color: var(--Line);
-} */
 
 .remember-forgot{
     display: flex;
@@ -152,9 +141,9 @@ input{
 }
 
 .forgot{
-   display: flex;
-   width: fit-content;
-   cursor: pointer;
+    display: flex;
+    width: fit-content;
+    cursor: pointer;
 }
 
 .login-button{
@@ -195,3 +184,80 @@ input{
     height: 500px;
 }
 
+/* Responsive styles */
+/* @media (max-width: 1200px) {
+    .container {
+        width: 800px;
+        flex-direction: column;
+    }
+    .content-area {
+        width: 100%;
+    }
+    .right-area {
+        width: 100%;
+        margin-left: 0;
+        padding: 20px;
+    }
+    .image {
+        height: 300px;
+        border-bottom-right-radius: 0;
+    }
+} */
+
+@media (max-width: 768px) {
+    body {
+        height: auto;
+        padding: 20px;
+    }
+    .container {
+        width: 100%;
+        flex-direction: column;
+    }
+    .content-area {
+        width: 100%;
+    }
+    .right-area {
+        width: 100%;
+        margin-left: 0;
+        padding: 20px;
+    }
+    .image {
+        height: 300px;
+        border-radius: 0 0 20px 20px;
+        
+    }
+}
+
+@media (max-width: 576px) {
+    body {
+        height: auto;
+        padding: 10px;
+    }
+    .container {
+        width: 100%;
+        flex-direction: column;
+    }
+    .content-area {
+        width: 100%;
+    }
+    .right-area {
+        width: 100%;
+        margin-left: 0;
+        padding: 10px;
+    }
+    .image {
+        height: 200px;
+        border-radius: 0 0 15px 15px;
+    }
+    .company-name,
+    .text-company,
+    .title,
+    .text-welcome,
+    .remember-forgot,
+    .login-button,
+    .create-acc {
+        text-align: center;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}

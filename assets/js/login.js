@@ -10,8 +10,8 @@
         const validPassword = "admin12345";
 
         if (emailInput === validEmail && passwordInput === validPassword) {
-        // Redirect to dashboard.html if credentials are correct
-        window.location.href = "dashboard.html";
+        // Redirect to index.html if credentials are correct
+        window.location.href = "index.html";
         } else {
         // Show an alert if credentials are incorrect
         alert("Invalid email or password. Please try again.");

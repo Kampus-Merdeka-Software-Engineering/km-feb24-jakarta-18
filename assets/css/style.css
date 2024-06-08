@@ -140,7 +140,7 @@ body {
     border-radius: 10px;
     box-shadow: 10px gray;
     padding: 10px 2rem;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
 }
 .header img {
     width: 50px;
@@ -151,17 +151,6 @@ body {
 .header_title {
     color: rgb(50, 44, 43);
     font-weight:500;
-    /* align-items:end; */
-    /* gap: 5px; */
-    /* padding: 4px 12px; */
-    margin-left: -550px;
-}
-
-/* .header_title span{
-    margin-left: 15px;
-}  */
-
-.mitra {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -182,48 +171,68 @@ body {
     gap: 10px;
     padding: 4px 12px;
 }
-/* .filter-container {
-    padding: 2rem;
+.filter-container {
     border-radius: 10px;
-    background-color: rgb(255, 252, 246);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 2rem 2rem;
-}
-.filter-content {
     background-color: rgb(230, 219, 202);
-    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0 0 1.2rem 1.2rem;
+    gap: 2rem;
+    margin-left: 27px;
+}
+.filter-dropdown {
     padding: 1.2rem;
     width: 290px;
-    height: 150px;
+    height: 80px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-} */
-
-.footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    background: rgb(186, 135, 89);
-    border-radius: 10px;
-    box-shadow: 10px gray;
-    padding: 10px 2rem;
-    margin-bottom: 1rem;
 }
+
+.filter-dropdown label {
+    color: #322c2b;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.filter-dropdown select {
+    padding: 10px;
+    font-size: 14px;
+    color: #322c2b;
+    background-color: white;
+    border: 1px solid #623f20;
+    border-radius: 5px;
+    outline: none;
+}
+
+.filter-dropdown option {
+    color:#322c2b;
+    background-color: white;
+}
+
+/* Dropdown hover and focus effects */
+.filter-dropdown select:hover {
+    border-color:  #fc7f7f; 
+}
+
+.filter-dropdown select:focus {
+    border-color:#ffa1a1; 
+    box-shadow: 0 0 5px #ffa1a1; 
+}
+
 .scorecard_container {
     background-color: rgb(255, 252, 246);
     padding: 2rem;
     border-radius: 10px;
+    margin-top: 2rem;
+    height: 500px;
 }
 .scorecard_content {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 3rem;
+    gap: 2rem;
 }
 .scorecard_title {
     color: rgb(50, 44, 43);
@@ -343,6 +352,43 @@ body {
     font-weight: bold;
     color: rgb(186, 135, 89);
 }
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    background: rgb(186, 135, 89);
+    border-radius: 10px;
+    box-shadow: 10px gray;
+    padding: 10px 2rem;
+    margin-bottom: 1rem;
+}
+
+.footer_container{
+    margin-top:4rem;
+    padding: 2rem;
+}
+
+.footer_content{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+
+.company .logo{
+    width: 60px;
+    padding: 5px;
+}
+
+.contact-details .logo{
+    width: 20px;
+}
+
+
+
 
 /* Responsive styles */
 @media (max-width: 1200px) {

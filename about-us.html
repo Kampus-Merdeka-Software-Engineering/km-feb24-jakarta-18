@@ -1,3 +1,156 @@
-<p>
-    ini about us
-</p>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Coffe Shop Sales 18</title>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.0.7/css/dataTables.dataTables.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.0.7/css/responsive.dataTables.min.css"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div class="sidebar" id="sidebar">
+      <div class="logo">
+        <div class="logo-content">
+          <img src="assets/img/coffeeshop2.png" class="logo1" />
+          <span>CoffeeShop18</span>
+        </div>
+      </div>
+      <ul class="menu">
+        <li>
+          <a href="index.html">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="about-us.html">
+            <i class="fas fa-mug-hot"></i>
+            <span>About Us</span>
+          </a>
+        </li>
+        <li class="logout">
+          <a href="login.html">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="main">
+      <div class="header">
+        <div class="header_title">
+          <span>KM JAKARTA TEAM 18</span>
+          <h2>Coffe Shop Sales 18 Dashboard</h2>
+        </div>
+        <div class="user">
+          <div class="hello-admin">
+            <h4>Hello, Admin</h4>
+          </div>
+          <img src="assets/img/user.png" alt="" />
+        </div>
+      </div>
+
+      <!-- scorecard-content -->
+      <div class="scorecard_container">
+        <!-- <h3 class="main_title">SCORECARD</h3> -->
+        <div class="scorecard_content">
+          <div class="scorecard">
+            <div class="scorecard_header">
+              <div class="amount">
+                <span class="title"> Total Sales (QTY) </span>
+                <span class="amount_value totalSales"> 214,470 </span>
+              </div>
+              <i class="fa fa-line-chart icon"></i>
+            </div>
+          </div>
+          <!-- Total Revenue -->
+          <div class="scorecard">
+            <div class="scorecard_header">
+              <div class="amount">
+                <span class="title"> Total Revenue ($) </span>
+                <span class="amount_value totalRevenue"> $700,000 </span>
+              </div>
+              <i class="fas fa-dollar-sign icon"></i>
+            </div>
+          </div>
+          <!-- AVG Sales -->
+          <div class="scorecard">
+            <div class="scorecard_header">
+              <div class="amount">
+                <span class="title"> AVG Sales per Item (QTY) </span>
+                <span class="amount_value AVGSalesQTY"> 1.44 </span>
+              </div>
+              <i class="fas fa-chart-bar icon"></i>
+            </div>
+          </div>
+          <!-- AVG Revenue per item  -->
+          <div class="scorecard">
+            <div class="scorecard_header">
+              <div class="amount">
+                <span class="title"> AVG Revenue ($) </span>
+                <span class="amount_value AVGRevenue"> $5 </span>
+              </div>
+              <i class="fas fa-dollar-sign icon"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer>
+        <div class="footer_container">
+          <div class="footer_content">
+            <div class="company" id="company">
+              <img
+                class="logo"
+                src="assets/img/km-logo.png"
+                alt="logo kampus merdeka"
+              />
+              <img
+                class="logo"
+                src="assets/img/revou-logo.png"
+                alt="logo revou"
+              />
+              <p>Content in this dataset is provide by kaggle.com</p>
+            </div>
+            <div class="footer_link" id="footer_link">
+              <h3>Links</h3>
+              <div class="links">
+                <a href="index.html">Dashboard</a>
+                <a href="about-us.html">About Us</a>
+              </div>
+            </div>
+            <div class="col" id="contact">
+              <h3>Contact</h3>
+              <div class="contact-details">
+                <img
+                  class="logo"
+                  src="assets/img/github.png"
+                  alt="logo github"
+                />
+                <a
+                  target="_blank"
+                  href="https://github.com/Kampus-Merdeka-Software-Engineering/km-feb24-jakarta-18/"
+                  >KM Jakarta Team 18</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
