@@ -353,6 +353,130 @@ body {
     color: rgb(186, 135, 89);
 }
 
+/* about us card */
+.team-container{
+    width: 100%;
+    cursor: pointer;
+    padding: 10px;
+}
+
+#team-card{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.line-1{
+    border: 2px solid;
+    border-color: var(--coklat);
+    width:100%;
+    margin-top:2px;
+    margin-bottom:2px;
+}
+
+.card{
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    flex-wrap: wrap;
+    /* border: 2px solid (--coklat); */
+    gap: 0;
+}
+
+.box{
+    width: 250px;
+    height: 350px;
+    background-color: rgba(255, 255, 255, 0.4);
+    /*background-pacity: 30%;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 10px;
+   /* border-color: solid white;
+    border-width: thick;*;*/
+    margin: 20px;
+    position: relative;
+    /*box-shadow: 0px 15px 50px rgba(100, 100, 111, 0.5);*/
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.box:hover{
+    transform: scale(1.01);
+    transition: all ease 0.1s;
+}
+
+.top-card{
+    width: 70%;
+    height: 30px;
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    left: 50%;
+    top:0;
+    transform: translate(-50%);
+    background-color: rgb(186, 135, 89);
+    border-radius: 0 0 10px 10px;
+}
+
+.role{
+    text-align: center;
+    color: #ffffff;
+}
+
+.description{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.desc-box{
+    width: 250px;
+    height: 60px;
+    background-color: white;
+    padding: 5px 15px 10px 15px;
+    text-align: left;
+}
+
+.description img{
+    width: 170px;
+    height: 170px;
+    /*border-radius: 50%;*/
+    margin: 10px;
+    overflow: hidden;
+    object-fit: cover;
+    object-position: center;
+    /*box-shadow: 0px 7px 29px 0px rgba(100, 100, 111, 0.6);*/
+}
+
+/*.description .university{
+    align-items: left;
+}*/
+
+.line-2{
+    border: 1.5px solid;
+    border-color: var(--coklat);
+    width: 100%;
+    margin-top:2px;
+    margin-bottom:2px;
+    align-content: center;
+}
+
+.linkedin-logo{
+    width: 50;
+    height: 50;
+}
+
+.github-logo{    
+    width: 50;
+    height: 50;
+}
+
 .footer {
     display: flex;
     justify-content: space-between;
