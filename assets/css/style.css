@@ -449,9 +449,15 @@ body {
     padding: 5px 15px 10px 15px;
     text-align: left;
 }
-
-.university .name{
+.long-name {
+    font-size: 1.5vw;
+}
+.long-university {
     font-size: 0.9em;
+}
+
+.very-long-university {
+    font-size: 0.75em;
 }
 .description img{
     width: 200px;
