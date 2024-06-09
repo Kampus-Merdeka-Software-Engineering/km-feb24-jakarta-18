@@ -653,3 +653,9 @@ body {
         align-items: center;
     }
 }
+
+@media(max-width:612px){
+    .box{
+        flex-grow: 0.7;
+    }
+}
