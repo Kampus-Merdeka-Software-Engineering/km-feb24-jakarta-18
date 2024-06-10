@@ -390,7 +390,8 @@ body {
 
 .card{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     flex-wrap: wrap;
     gap: 0;
 }
