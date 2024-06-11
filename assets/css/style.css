@@ -355,7 +355,16 @@ body {
     border-radius: 10px;
     margin-top: 2rem;
 }
-.about{
+
+.card_content{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.welcome{
     font: Helvetica;
     font-size: 4vw ;
 }
