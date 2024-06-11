@@ -222,7 +222,6 @@ body {
     padding: 2rem;
     border-radius: 10px;
     margin-top: 2rem;
-    /*height: 300px;*/
 }
 .scorecard_content {
     display: flex;
@@ -499,7 +498,6 @@ body {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-
 }
 
 .company .logo{
@@ -510,8 +508,6 @@ body {
 .contact-details .logo{
     width: 20px;
 }
-
-
 
 
 /* Responsive styles */

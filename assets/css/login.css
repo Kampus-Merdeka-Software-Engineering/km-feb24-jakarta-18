@@ -185,25 +185,6 @@ input{
 }
 
 /* Responsive styles */
-/* @media (max-width: 1200px) {
-    .container {
-        width: 800px;
-        flex-direction: column;
-    }
-    .content-area {
-        width: 100%;
-    }
-    .right-area {
-        width: 100%;
-        margin-left: 0;
-        padding: 20px;
-    }
-    .image {
-        height: 300px;
-        border-bottom-right-radius: 0;
-    }
-} */
-
 @media (max-width: 768px) {
     body {
         height: auto;

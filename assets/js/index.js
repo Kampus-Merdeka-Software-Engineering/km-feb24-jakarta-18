@@ -7,8 +7,7 @@ let totalQTY = 0;
 let totalTransaction = 0;
 
 //chart
-let datasetPie = [
-];
+let datasetPie = [];
 for (let index = 0; index < datasets.length; index++) {
   const dataset = datasets[index];
   totalRevenue += Number(dataset.transaction_total);
@@ -53,17 +52,10 @@ document.querySelector(".AVGSalesQTY").innerHTML = AVGSalesQTY(
 document.querySelector(".AVGRevenue").innerHTML =
   "$" + AVGRevenue(totalTransaction, transactionTotal).toFixed(2);
 
-function createChart(
-  labels,
-  datasets,
-  type,
-  options,
-  element,
-  filter = () => true
-) {
+function createChart(labels, datasets, type, options, element) {
   const data = {
     labels: labels,
-    datasets: datasets.filter((dataset) => filter(dataset)),
+    datasets: datasets,
   };
 
   const config = {
@@ -571,12 +563,15 @@ optiontoko.addEventListener('change', event => {
   lineTrendHours.data.datasets = lineDataByHour;
   lineTrendHours.update();
 
+  
+
   //Filter Tabel
   table.clear();
   table.rows.add(rows);
   table.draw();
 
 });
+
 
 //////////////////////////////////////////////////////////
 //Add Event Listener Filter optionkategori
@@ -808,3 +803,180 @@ optionkategori.addEventListener('change', event => {
   table.draw();
 
 }); 
+
+//Event listener for filter change
+categoryDropdown.addEventListener('change', () => {
+  const selectedCategory = categoryDropdown.value;
+  filterData(selectedCategory, storeDropdown.value);
+});
+
+storeDropdown.addEventListener('change', () => {
+  const selectedStore = storeDropdown.value;
+  filterData(categoryDropdown.value, selectedStore);
+});
+
+function filterData(selectedCategory, selectedStore) {
+  let filteredData = datasets;
+
+  if (selectedCategory !== "All") {
+    filteredData = filteredData.filter(
+      dataset => dataset.product_category === selectedCategory
+    );
+  }
+
+  if (selectedStore !== "All") {
+    filteredData = filteredData.filter(
+      dataset => dataset.store_location === selectedStore
+    );
+  }
+
+  // Recalculate metrics
+  let filteredTotalRevenue = 0;
+  let filteredTotalQTY = 0;
+  let filteredTotalTransaction = filteredData.length;
+
+  let filteredDatasetPie = [];
+  for (let index = 0; index < filteredData.length; index++) {
+    const dataset = filteredData[index];
+    filteredTotalRevenue += Number(dataset.transaction_total);
+    filteredTotalQTY += Number(dataset.transaction_qty);
+
+    if (filteredDatasetPie.map((row) => row.id).includes(dataset.store_id)) {
+      filteredDatasetPie = filteredDatasetPie.map((row) => {
+        if (row.id === dataset.store_id) {
+          return {
+            ...row,
+            value: row.value + Number(dataset.transaction_total),
+          };
+        }
+        return row;
+      });
+    } else {
+      filteredDatasetPie.push({
+        id: dataset.store_id,
+        nama: dataset.store_location,
+        value: Number(dataset.transaction_total),
+      });
+    }
+  }
+
+  // Update metrics
+  document.querySelector(".totalSales").innerHTML = filteredTotalTransaction;
+  document.querySelector(".totalRevenue").innerHTML =
+    "$" + filteredTotalRevenue.toFixed(2);
+  document.querySelector(".AVGSalesQTY").innerHTML = AVGSalesQTY(
+    filteredTotalQTY,
+    filteredTotalTransaction
+  ).toFixed(2);
+
+  document.querySelector(".AVGRevenue").innerHTML =
+    "$" + AVGRevenue(filteredTotalRevenue, filteredTotalTransaction).toFixed(2);
+
+  // Update charts
+  pieChart.data.labels = filteredDatasetPie.map(row => row.nama);
+  pieChart.data.datasets[0].data = PersentaseSales(filteredDatasetPie, filteredTotalRevenue);
+  pieChart.update();
+
+  let filteredCategoryRevenue = {};
+  for (let index = 0; index < filteredData.length; index++) {
+    const dataset = filteredData[index];
+    const category = dataset.product_category;
+    if (filteredCategoryRevenue[category]) {
+      filteredCategoryRevenue[category] += Number(dataset.transaction_total);
+    } else {
+      filteredCategoryRevenue[category] = Number(dataset.transaction_total);
+    }
+  }
+
+  let filteredSortedCategories = Object.entries(filteredCategoryRevenue)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+
+  barRevenue.data.labels = filteredSortedCategories.map((category) => category[0]);
+  barRevenue.data.datasets[0].data = filteredSortedCategories.map((category) => category[1]);
+  barRevenue.update();
+
+  let filteredTypeRevenue = {};
+  for (let index = 0; index < filteredData.length; index++) {
+    const dataset = filteredData[index];
+    const type = dataset.product_type;
+    if (filteredTypeRevenue[type]) {
+      filteredTypeRevenue[type] += Number(dataset.transaction_total);
+    } else {
+      filteredTypeRevenue[type] = Number(dataset.transaction_total);
+    }
+  }
+
+  let filteredSortedTypes = Object.entries(filteredTypeRevenue)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+
+  barRevenueType.data.labels = filteredSortedTypes.map((type) => type[0]);
+  barRevenueType.data.datasets[0].data = filteredSortedTypes.map((type) => type[1]);
+  barRevenueType.update();
+
+  // Update line charts
+  const filteredRevenueByMonth = storeLocations.reduce((acc, storeLocation) => {
+    acc[storeLocation] = {};
+    filteredData.forEach(dataset => {
+      if (dataset.store_location === storeLocation) {
+        const month = dataset.transaction_date.split("/")[0]; // Assuming MM/DD/YYYY format
+        const revenue = Number(dataset.transaction_total);
+        acc[storeLocation][month] = (acc[storeLocation][month] || 0) + revenue;
+      }
+    });
+    return acc;
+  }, {});
+
+  lineTrend.data.datasets.forEach((dataset, index) => {
+    const storeLocation = storeLocations[index];
+    dataset.data = sortedMonthNumbers.map(month => filteredRevenueByMonth[storeLocation][month] || 0);
+  });
+  lineTrend.update();
+
+  const filteredRevenueByHour = storeLocations.reduce((acc, storeLocation) => {
+    acc[storeLocation] = {};
+    filteredData.forEach(dataset => {
+      if (dataset.store_location === storeLocation) {
+        const hour = dataset.transaction_time.split(":")[0]; // Extract hour from transaction_time
+        const revenue = Number(dataset.transaction_total);
+        acc[storeLocation][hour] = (acc[storeLocation][hour] || 0) + revenue;
+      }
+    });
+    return acc;
+  }, {});
+
+  lineTrendHours.data.datasets.forEach((dataset, index) => {
+    const storeLocation = storeLocations[index];
+    dataset.data = hourLabels.map(hour => filteredRevenueByHour[storeLocation][hour] || 0);
+  });
+  lineTrendHours.update();
+  }
+
+// Add Event Listener Filter optiontoko and optionkategori
+optiontoko.addEventListener('change', event => {
+  applyFilters();
+});
+
+optionkategori.addEventListener('change', event => {
+  applyFilters();
+});
+
+function applyFilters() {
+  const selectedStoreLocation = optiontoko.value;
+  const selectedProductCategory = optionkategori.value;
+
+  let filteredData = datasets;
+
+  if (selectedStoreLocation !== "All") {
+    filteredData = filteredData.filter(row => row.store_location === selectedStoreLocation);
+  }
+
+  if (selectedProductCategory !== "All") {
+    filteredData = filteredData.filter(row => row.product_category === selectedProductCategory);
+  }
+
+  table.clear();
+  table.rows.add(filteredData);
+  table.draw();
+}
