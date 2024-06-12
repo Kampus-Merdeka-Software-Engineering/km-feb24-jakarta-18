@@ -433,6 +433,12 @@ body {
     color:  rgb(186, 135, 89);
 }
 
+.long-role{
+    font-size: 13px;
+    text-align: center;
+    color:  rgb(186, 135, 89);
+}
+
 .description{
     display: flex;
     justify-content: center;
